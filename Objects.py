@@ -1,4 +1,4 @@
-from Util import Point, Vector
+from Util import Util, Point, Vector
 
 class Object:
     def __init__(self, x, y, z): #Las coordenadas x, y, z corresponden al centro del objeto
@@ -10,32 +10,60 @@ class Object:
         return f"x:{self.x} y: {self.y} z: {self.z}"
 
 class Cube(Object):
-    def __init__(self, x, y, z, edge):
+    def __init__(self, x, y, z, edgeLength):
         super().__init__(x, y, z)
-        self.edge = edge #Lado del cubo
+        self.edgeLength = edgeLength #Lado del cubo
 
-        
     #--Vértices--
     # Cuanto más positivo sea el vertice en "y" antes irá alfabéticamente
     # Cuando más negativo sea el vértice en "x" y "z" antes irán alfabeticamente
     # (prioridades: y>z>x) (mirar vertices.png)
     
     def getA(self):
-        return Point(self.x-(self.edge/2), self.y+(self.edge/2), self.z-(self.edge/2))
+        return Point(self.x-(self.edgeLength/2), self.y+(self.edgeLength/2), self.z-(self.edgeLength/2))
     def getB(self):
-        return Point(self.x+(self.edge/2), self.y+(self.edge/2), self.z-(self.edge/2))
+        return Point(self.x+(self.edgeLength/2), self.y+(self.edgeLength/2), self.z-(self.edgeLength/2))
     def getC(self):
-        return Point(self.x-(self.edge/2), self.y+(self.edge/2), self.z+(self.edge/2))
+        return Point(self.x-(self.edgeLength/2), self.y+(self.edgeLength/2), self.z+(self.edgeLength/2))
     def getD(self):
-        return Point(self.x+(self.edge/2), self.y+(self.edge/2), self.z+(self.edge/2))
+        return Point(self.x+(self.edgeLength/2), self.y+(self.edgeLength/2), self.z+(self.edgeLength/2))
     def getE(self):
-        return Point(self.x-(self.edge/2), self.y-(self.edge/2), self.z-(self.edge/2))
+        return Point(self.x-(self.edgeLength/2), self.y-(self.edgeLength/2), self.z-(self.edgeLength/2))
     def getF(self):
-        return Point(self.x+(self.edge/2), self.y-(self.edge/2), self.z-(self.edge/2))
+        return Point(self.x+(self.edgeLength/2), self.y-(self.edgeLength/2), self.z-(self.edgeLength/2))
     def getG(self):
-        return Point(self.x-(self.edge/2), self.y-(self.edge/2), self.z+(self.edge/2))
+        return Point(self.x-(self.edgeLength/2), self.y-(self.edgeLength/2), self.z+(self.edgeLength/2))
     def getH(self):
-        return Point(self.x+(self.edge/2), self.y-(self.edge/2), self.z+(self.edge/2))
+        return Point(self.x+(self.edgeLength/2), self.y-(self.edgeLength/2), self.z+(self.edgeLength/2))
+    
+    #Aristas
+
+    def getAB(self):
+        return Util.createVector(self.getA(), self.getB())
+    def getAC(self):
+        return Util.createVector(self.getA(), self.getC())
+    def getAD(self):
+        return Util.createVector(self.getA(), self.getD())
+    def getBD(self):
+        return Util.createVector(self.getB(), self.getD())
+    def getBF(self):
+        return Util.createVector(self.getB(), self.getF())
+    def getCD(self):
+        return Util.createVector(self.getC(), self.getD())
+    def getCG(self):
+        return Util.createVector(self.getC(), self.getG())
+    def getGE(self):
+        return Util.createVector(self.getG(), self.getE())
+    def getGH(self):
+        return Util.createVector(self.getG(), self.getH())
+    def getEF(self):
+        return Util.createVector(self.getE(), self.getF())
+    def getFH(self):
+        return Util.createVector(self.getF(), self.getH())
+    
+    #Caras
+
+
 
 class GameManager:
     def __init__(self):
@@ -60,7 +88,7 @@ class GameManager:
         self.objs.remove(self.search(x, y, z))
 
     def move(self, obj, x, y, z):
-        if self.search(x, y, z) != -1:
+        if self.search(x, y, z) is not None:
             print("Error hay otro objeto en el destino")
             return
         obj.x = x

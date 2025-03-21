@@ -1,4 +1,4 @@
-from Util import Util, Point, Vector
+from Util import *
 
 class Object:
     def __init__(self, x, y, z): #Las coordenadas x, y, z corresponden al centro del objeto
@@ -61,8 +61,20 @@ class Cube(Object):
     def getFH(self):
         return Util.createVector(self.getF(), self.getH())
     
-    #Caras
+    #Caras (Desde el punto de visto del eje de coordenadas)
 
+    def getTop(self):
+        return Plane(self.getA, self.getB, self.getC)
+    def getBottom(self):
+        return Plane(self.getE, self.getF, self.getG)
+    def getLeft(self):
+        return Plane(self.getC, self.getA, self.getE)
+    def getRight(self):
+        return Plane(self.getB, self.getD, self.getF)
+    def getFront(self):
+        return Plane(self.getC, self.getD, self.getG)
+    def get(self):
+        return Plane(self.getA, self.getB, self.getE)
 
 
 class GameManager:

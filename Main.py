@@ -1,12 +1,15 @@
 import pygame as pg
 from Objects import *
+from Util import *
+
+
+v1 = Vector(2,2,2)
+print(v1.normalized())
 
 gm = GameManager()
 
 gm.add(2, 2, 2, 2)
 gm.printAll()
-
-
 
 
 

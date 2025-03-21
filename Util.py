@@ -8,8 +8,6 @@ class Point:
         return Vector(self.x-punto.x,self.y-punto.y,self.z-punto.z)
 
 
-
-
 class Rect:
     def __init__(self, puntoA: Point, puntoB: Point):
         self.vDir = puntoA-puntoB
@@ -17,6 +15,7 @@ class Rect:
         self.x = puntoA.x
         self.y = puntoA.y
         self.z = puntoA.z
+    
     
     def getPoint(self, t=0):
         x = self.x + vdir.x*t

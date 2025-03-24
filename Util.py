@@ -25,23 +25,43 @@ class Vector:
         return Vector(x_normalized,y_normalized,z_normalized) 
 
 class Matrix:
-    def __init__(self, x=0, y=0, z=0):
-        self.matrix = [[[0 for _ in range(x)] for _ in range(y)] for _ in range(z)]
-
+    def __init__(self, cols,rows, matrix=None):
+        if(matrix==None):
+            self.matrix = [[0 for _ in range(cols)] for _ in range(rows)]
+        else:
+            self.matriz = None
     def redondear(self, decimales=5):
         return [[round(elemento, decimales) for elemento in fila] for fila in self.matrix]
     
-    def rotar(self, v, angulo_X=0, angulo_Y=0, angulo_Z=0):
-        matriz_giro_X = [[1, 0, 0], [0, math.cos(angulo_X), -math.sin(angulo_X)], [0, math.sin(angulo_X), math.cos(angulo_X)]]
-        matriz_giro_Y = [[math.cos(angulo_Y), 0, math.sin(angulo_Y)], [0, 1, 0], [-math.sin(angulo_Y), 0, math.cos(angulo_Y)]]
-        matriz_giro_Z = [[math.cos(angulo_Z), -math.sin(angulo_Z), 0], [math.sin(angulo_Z), math.cos(angulo_Z), 0], [0, 0, 1]]
+    def rotar(self, angulo_X=0, angulo_Y=0, angulo_Z=0):
+        matriz_rotacion = Rotation_matrix(angulo_X,angulo_Y,angulo_Z)
+        # matriz_giro_X = [[1, 0, 0], [0, math.cos(angulo_X), -math.sin(angulo_X)], [0, math.sin(angulo_X), math.cos(angulo_X)]]
+        # matriz_giro_Y = [[math.cos(angulo_Y), 0, math.sin(angulo_Y)], [0, 1, 0], [-math.sin(angulo_Y), 0, math.cos(angulo_Y)]]
+        # matriz_giro_Z = [[math.cos(angulo_Z), -math.sin(angulo_Z), 0], [math.sin(angulo_Z), math.cos(angulo_Z), 0], [0, 0, 1]]
 
-        matriz_giro_X = self.redondear_matriz(matriz_giro_X, 10)
-        matriz_giro_Y = self.redondear_matriz(matriz_giro_Y, 10)
-        matriz_giro_Z = self.redondear_matriz(matriz_giro_Z, 10)
-        matriz_rotada = self.multiplicar_matrices(matriz_giro_Z, self.multiplicar_matrices(matriz_giro_Y, matriz_giro_X))
-        r = self.multiplicar_matrices(matriz_rotada,v)
-        return r
+        # matriz_giro_X = self.redondear_matriz(matriz_giro_X, 10)
+        # matriz_giro_Y = self.redondear_matriz(matriz_giro_Y, 10)
+        # matriz_giro_Z = self.redondear_matriz(matriz_giro_Z, 10)
+        self.matrix = Util.multiplicar_matrices(matriz_rotacion.matrix,self.matrix)
+    
+class Rotation_matrix(Matrix):
+    def __init__(self,angulo_x,angulo_y,angulo_z):
+        super(3,3)
+        cosX, sinX = math.cos(angulo_x), math.sin(angulo_x)
+        cosY, sinY = math.cos(angulo_y), math.sin(angulo_y)
+        cosZ, sinZ = math.cos(angulo_z), math.sin(angulo_z)
+
+        self.matrix = [
+        [cosY * cosZ, -sinZ * cosY, sinY],
+        [cosX * sinZ + sinX * sinY * cosZ, cosX * cosZ - sinX * sinY * sinZ, -sinX * cosY],
+        [sinX * sinZ - cosX * sinY * cosZ, sinX * cosZ + cosX * sinY * sinZ, cosX * cosY]
+        ]
+        
+class Perspective_matrix(Matrix):
+    
+
+class View_matrix(Matrix):
+    
 
 class Rect:
     def __init__(self, puntoA: Point, puntoB: Point):

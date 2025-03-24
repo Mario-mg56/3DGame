@@ -19,7 +19,7 @@ points2D = set()
 for i in points:
     p = Util.getPerspectiva(i, 2)
     print(p)
-    Util.draw(screen, p)
+    Util.draw(screen,p)
 
 
 

@@ -16,7 +16,7 @@ class Vector:
         self.z = z
         
     def toMatrix(self):
-        self.matrix = Matrix(1,3, [x,y,z])
+        self.matrix = Matrix(1,3, [self.x, self.y, self.z])
     def getMod(self): #Devuelve el módulo del vector
         return ((self.fin.x-self.inicio.x)**2 + (self.fin.y-self.inicio.y)**2 + (self.fin.z-self.inicio.z)**2)**0.5
     
@@ -32,9 +32,9 @@ class Matrix:
     def __init__(self, cols,rows, datos=None):
         self.matrix = [[0 for _ in range(cols)] for _ in range(rows)]
         if(datos!=None):
-            setupear_matrix(datos)
+            self.setupear_matrix(datos)
             
-    def setupear_matrix(datos): #privado
+    def setupear_matrix(self, datos): #privado
         for i in range(len(datos)):
             for j in range(len(datos[i])):
                 if(self.matrix[i][j] != None):
@@ -66,10 +66,10 @@ class Rotation_matrix(Matrix):
         super().__init__(3, 3, datos)
 
         
-class Perspective_matrix(Matrix):
+# class Perspective_matrix(Matrix):
     
 
-class View_matrix(Matrix):
+# class View_matrix(Matrix):
     
 
 class Rect:

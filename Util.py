@@ -1,4 +1,4 @@
-import math
+import math, pygame as pg
 
 class Point:
     def __init__(self, x, y, z):
@@ -8,6 +8,20 @@ class Point:
 
     def __sub__(self, punto):
         return Vector(self.x-punto.x,self.y-punto.y,self.z-punto.z)
+    
+    def __str__(self):
+        return f"x:{self.x} y:{self.y} z:{self.z}" 
+
+class Point2D:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __sub__(self, punto):
+        return Vector(self.x-punto.x,self.y-punto.y, 0)
+
+    def __str__(self):
+        return f"x:{self.x} y:{self.y}" 
 
 class Vector:
     def __init__(self, x, y, z):
@@ -147,3 +161,12 @@ class Util:
                 for k in range(columnas_A): 
                     matriz_C[i][j] += matriz_A[i][k] * matriz_B[k][j] 
         return matriz_C
+    
+    def getPerspectiva(p:Point, d):
+        return Point2D(p.x*d/p.z, p.y*d/(p.z))
+    
+    def draw(screen, p:Point2D, color=(255, 255, 255)):
+        pg.draw.circle(screen, color, (p.x, p.y), 2)
+
+    def drawLine(screen, p1:Point2D, p2:Point2D, color=(255, 255, 255)):
+        pg.draw.line(screen, color, (p1.x, p2.y), (p2.z, p2.y))

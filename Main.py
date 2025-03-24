@@ -2,21 +2,27 @@ import pygame as pg
 from Objects import *
 from Util import *
 
-
-v1 = Vector(2,2,2)
-print(v1.normalized())
-
-gm = GameManager()
-
-gm.add(2, 2, 2, 2)
-gm.printAll()
-
-
-
-
 pg.init()
 screen = pg.display.set_mode((650, 650))
 clock = pg.time.Clock() #Control de FPS
+
+v1 = Vector(2,2,2)
+
+gm = GameManager()
+
+cubo = gm.add(2, 2, 2, 2)
+
+points = cubo.getPoints()
+
+points2D = set()
+
+for i in points:
+    p = Util.getPerspectiva(i, 2)
+    print(p)
+    Util.draw(screen, p)
+
+
+
 
 #Bucle del juego
 running = True

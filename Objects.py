@@ -18,7 +18,8 @@ class Cube(Object):
     # Cuanto más positivo sea el vertice en "y" antes irá alfabéticamente
     # Cuando más negativo sea el vértice en "x" y "z" antes irán alfabeticamente
     # (prioridades: y>z>x) (mirar vertices.png)
-    
+
+
     def getA(self):
         return Point(self.x-(self.edgeLength/2), self.y+(self.edgeLength/2), self.z-(self.edgeLength/2))
     def getB(self):
@@ -36,6 +37,10 @@ class Cube(Object):
     def getH(self):
         return Point(self.x+(self.edgeLength/2), self.y-(self.edgeLength/2), self.z+(self.edgeLength/2))
     
+    def getPoints(self):
+        return [self.getA(), self.getB(), self.getC(), self.getD(), self.getE(), self.getF(), self.getG(), self.getH()]
+    
+
     #Aristas
 
     def getAB(self):

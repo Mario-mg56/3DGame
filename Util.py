@@ -14,7 +14,9 @@ class Vector:
         self.x = x
         self.y = y
         self.z = z
-    
+        
+    def toMatrix(self):
+        self.matrix = Matrix(1,3, [x,y,z])
     def getMod(self): #Devuelve el módulo del vector
         return ((self.fin.x-self.inicio.x)**2 + (self.fin.y-self.inicio.y)**2 + (self.fin.z-self.inicio.z)**2)**0.5
     
@@ -24,12 +26,22 @@ class Vector:
         z_normalized = self.z/self.getMod()
         return Vector(x_normalized,y_normalized,z_normalized) 
 
+
+
 class Matrix:
-    def __init__(self, cols,rows, matrix=None):
-        if(matrix==None):
-            self.matrix = [[0 for _ in range(cols)] for _ in range(rows)]
-        else:
-            self.matriz = None
+    def __init__(self, cols,rows, datos=None):
+        self.matrix = [[0 for _ in range(cols)] for _ in range(rows)]
+        if(datos!=None):
+            setupear_matrix(datos)
+            
+    def setupear_matrix(datos): #privado
+        for i in range(len(datos)):
+            for j in range(len(datos[i])):
+                if(self.matrix[i][j] != None):
+                    next
+                self.matrix[i][j] = datos.pop(0)
+        
+            
     def redondear(self, decimales=5):
         return [[round(elemento, decimales) for elemento in fila] for fila in self.matrix]
     
@@ -38,7 +50,6 @@ class Matrix:
         # matriz_giro_X = [[1, 0, 0], [0, math.cos(angulo_X), -math.sin(angulo_X)], [0, math.sin(angulo_X), math.cos(angulo_X)]]
         # matriz_giro_Y = [[math.cos(angulo_Y), 0, math.sin(angulo_Y)], [0, 1, 0], [-math.sin(angulo_Y), 0, math.cos(angulo_Y)]]
         # matriz_giro_Z = [[math.cos(angulo_Z), -math.sin(angulo_Z), 0], [math.sin(angulo_Z), math.cos(angulo_Z), 0], [0, 0, 1]]
-
         # matriz_giro_X = self.redondear_matriz(matriz_giro_X, 10)
         # matriz_giro_Y = self.redondear_matriz(matriz_giro_Y, 10)
         # matriz_giro_Z = self.redondear_matriz(matriz_giro_Z, 10)
@@ -46,16 +57,14 @@ class Matrix:
     
 class Rotation_matrix(Matrix):
     def __init__(self,angulo_x,angulo_y,angulo_z):
-        super(3,3)
         cosX, sinX = math.cos(angulo_x), math.sin(angulo_x)
         cosY, sinY = math.cos(angulo_y), math.sin(angulo_y)
         cosZ, sinZ = math.cos(angulo_z), math.sin(angulo_z)
+        datos=[cosY * cosZ, -sinZ * cosY, sinY,
+                cosX * sinZ + sinX * sinY * cosZ, cosX * cosZ - sinX * sinY * sinZ, -sinX * cosY,
+                sinX * sinZ - cosX * sinY * cosZ, sinX * cosZ + cosX * sinY * sinZ, cosX * cosY]
+        super().__init__(3, 3, datos)
 
-        self.matrix = [
-        [cosY * cosZ, -sinZ * cosY, sinY],
-        [cosX * sinZ + sinX * sinY * cosZ, cosX * cosZ - sinX * sinY * sinZ, -sinX * cosY],
-        [sinX * sinZ - cosX * sinY * cosZ, sinX * cosZ + cosX * sinY * sinZ, cosX * cosY]
-        ]
         
 class Perspective_matrix(Matrix):
     
@@ -112,9 +121,20 @@ class Plane:
         self.C = ((pB.x-pA.x)*(pC.y-pA.y)-(pB.y-pA.y)*(pC.x-pA.x))
         self.D = -(self.A*pA.x+self.B*pA.y+self.C*pA.z)
 
+
+
 class Util:
     def createVector(point0, pointf):
         return Vector(point0.x - pointf.x, point0.y - pointf.y, point0.z - pointf.z)
+    
+    def getUp():
+        return Vector(0,1,0)
+    def getDown():
+        return Vector(0,-1,0)
+    def getRight():
+        return Vector(1,0,0)
+    def getLeft():
+        return Vector(-1,0,0)   
     
     def multiplicar_matrices(matriz_A, matriz_B):
         filas_A = len(matriz_A)

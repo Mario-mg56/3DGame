@@ -139,7 +139,7 @@ class Rect:
         self.y = puntoA.y
         self.z = puntoA.z
     
-    def getPoint(self, t=0):
+    def getPoint(self, t=0)->Point:
         x = self.x + self.vdir.x*t
         y = self.y + self.vdir.y*t
         z = self.z + self.vdir.z*t
@@ -218,7 +218,7 @@ class Util:
         def getLeft():
             return Vector(-1,0,0)   
     
-    def interseccion_recta_plano(recta:Rect, plano:Plane):
+    def interseccion_recta_plano(recta:Rect, plano:PlaneNor):
         v = recta.vDir  # Vector dirección de la recta
         x = recta.x
         y = recta.y

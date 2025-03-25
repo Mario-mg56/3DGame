@@ -10,7 +10,10 @@ class Point:
         return Matrix(1,3, [self.x, self.y, self.z])
         
     def __sub__(self, punto):
-        return Vector(self.x-punto.x,self.y-punto.y,self.z-punto.z)
+        return Point(self.x-punto.x,self.y-punto.y,self.z-punto.z)
+    
+    def __add__(self, punto):
+        return Point(self.x+punto.x,self.y+punto.y,self.z+punto.z)
     
     def __str__(self):
         return f"x:{self.x} y:{self.y} z:{self.z}" 
@@ -42,6 +45,7 @@ class Vector:
         
     def toMatrix(self):
         return Matrix(1,3, [self.x, self.y, self.z])
+    
     def getMod(self): #Devuelve el módulo del vector
         return ((self.fin.x-self.inicio.x)**2 + (self.fin.y-self.inicio.y)**2 + (self.fin.z-self.inicio.z)**2)**0.5
     
@@ -51,6 +55,12 @@ class Vector:
         z_normalized = self.z/self.getMod()
         return Vector(x_normalized,y_normalized,z_normalized) 
 
+    def rotar(self, angulo_x, angulo_y, angulo_z):
+        v = self.toMatrix().rotar(angulo_x,angulo_y,angulo_z).toVector()
+        self.x = v.x
+        self.y = v.y
+        self.z = v.z
+    
 
 class Matrix:
     def __init__(self, cols,rows, datos=None):
@@ -74,6 +84,16 @@ class Matrix:
                 resultado.append(j)
         
         return Point(resultado[0],resultado[1],resultado[2])
+    
+    def toVector(self):
+        datos = self.matrix[0]
+        #Fuerza bruta reescribir
+        resultado = []
+        for i in datos:
+            for j in i:
+                resultado.append(j)
+        
+        return Vector(resultado[0],resultado[1],resultado[2])
     
     def __str__(self):
         return "\n".join([" | ".join(map(str, fila)) for fila in self.matrix])
@@ -152,8 +172,8 @@ class Rect:
         return len(set(tArray))==1
 
 
-class Plane:
-    def __init__(self, pA:Point, pB:Point, pC:Point): # plano a partir de 3 puntos en el plano
+class Plane: #Plano a partir de 3 puntos en el plano
+    def __init__(self, pA:Point, pB:Point, pC:Point):
         self.A = ((pB.y-pA.y)*(pC.z-pA.z)-(pB.z-pA.z)*(pC.y-pA.y))
         self.B = ((pB.z-pA.z)*(pC.x-pA.x)-(pB.x-pA.x)*(pC.z-pA.z))
         self.C = ((pB.x-pA.x)*(pC.y-pA.y)-(pB.y-pA.y)*(pC.x-pA.x))
@@ -172,16 +192,22 @@ class Plane:
     def __str__(self):
         return f"Punto1 :{self.pA} Punto2:{self.pB} Punto3:{self.pC}" 
 
+class PlaneNor: #Plano a partir de punto y vector normal al plano
+    def __init__(self, v:Vector, p:Point): 
+        self.A = v.x
+        self.B = v.y
+        self.C = v.z
+        self.D = -(self.A*p.x+self.B*p.y+self.C*p.z)
+        self.p = p
+        self.vn = v
 
-
+    def __str__(self):
+        return f"Ec del plano: {self.A}*x + {self.B}*y + {self.C}*z + {self.D} = 0"
 
 class Util:
-    
     class Vector:
-        
         def createVector(point0, pointf):
             return Vector(point0.x - pointf.x, point0.y - pointf.y, point0.z - pointf.z)
-        
         def getUp():
             return Vector(0,1,0)
         def getDown():
@@ -190,7 +216,8 @@ class Util:
             return Vector(1,0,0)
         def getLeft():
             return Vector(-1,0,0)   
-    
+
+
     def multiplicar_matrices(matriz_A, matriz_B):
         filas_A = len(matriz_A)
         columnas_A = len(matriz_A[0])
@@ -210,5 +237,5 @@ class Util:
         pg.draw.circle(screen, color, (p.x, p.y), 2)
 
     def drawLine(screen, p1:Point2D, p2:Point2D, color=(255, 255, 255)):
-        pg.draw.line(screen, color, (p1.x, p2.y), (p2.z, p2.y))
+        pg.draw.line(screen, color, (p1.x, p2.y), (p2.z, p2.y)) 
 

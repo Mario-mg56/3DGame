@@ -115,12 +115,13 @@ class Matrix:
 class Rotation_matrix(Matrix):
     def __init__(self,angulo_x,angulo_y,angulo_z):
         cosX, sinX = math.cos(angulo_x), math.sin(angulo_x)
-        print(cosX,sinX,)
         cosY, sinY = math.cos(angulo_y), math.sin(angulo_y)
         cosZ, sinZ = math.cos(angulo_z), math.sin(angulo_z)
+        #Rota en YXZ
         datos=[cosY * cosZ, -sinZ * cosY, sinY,
                 cosX * sinZ + sinX * sinY * cosZ, cosX * cosZ - sinX * sinY * sinZ, -sinX * cosY,
                 sinX * sinZ - cosX * sinY * cosZ, sinX * cosZ + cosX * sinY * sinZ, cosX * cosY]
+        
         super().__init__(3, 3, datos)
 
         
@@ -216,7 +217,20 @@ class Util:
             return Vector(1,0,0)
         def getLeft():
             return Vector(-1,0,0)   
-
+    
+    def interseccion_recta_plano(recta:Rect, plano:Plane):
+        v = recta.vDir  # Vector dirección de la recta
+        x = recta.x
+        y = recta.y
+        z = recta.z
+        A, B, C, D = plano.A, plano.B, plano.C, plano.D  # Coeficientes del plano
+        
+        denominador = (A*v.x+B*v.y+C*v.z)
+        if abs(denominador) < 1e-6:
+            return None
+        t = (D-A*x-B*y-C*z)/denominador
+        
+        return recta.getPoint(t)
 
     def multiplicar_matrices(matriz_A, matriz_B):
         filas_A = len(matriz_A)

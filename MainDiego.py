@@ -6,7 +6,7 @@ import math
 # pB = Point(4,4,4)
 # pC = Point(3,3,2)
 
-centro = Point(20, 20, 20)
+centro = Point(0, 0, 0)
 
 cam = Cam(centro, 20)
 

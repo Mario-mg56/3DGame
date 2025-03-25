@@ -132,19 +132,28 @@ class Rotation_matrix(Matrix):
     
 
 class Rect:
-    def __init__(self, puntoA: Point, puntoB: Point):
-        self.vDir = puntoA-puntoB
+    def __init__(self, puntoA:Point, puntoB:Point = None, vDir:Vector = None):   
+        if (vDir is None):
+            self.vDir = Vector(puntoA.x-puntoB.x, puntoA.y-puntoB.y, puntoA.z-puntoB.z)
+        else:
+            self.vDir = vDir
         #Ec paramétrica: (x = x1 + vDir.x*t), (y = y1 + vDir.y*t), (z = z1 + vDir.z*t)
         self.x = puntoA.x
         self.y = puntoA.y
         self.z = puntoA.z
-    
     def getPoint(self, t=0)->Point:
-        x = self.x + self.vdir.x*t
-        y = self.y + self.vdir.y*t
-        z = self.z + self.vdir.z*t
+        x = self.x + self.vDir.x*t
+        y = self.y + self.vDir.y*t
+        z = self.z + self.vDir.z*t
         return Point(x,y,z)
     
+    def rotate(self, angX, angY, angZ):
+        newP = Point(self.x, self.y, self.z)
+        newP.rotar(angX, angY, angZ)
+        self.vDir = self.vDir.rotar(angX, angY, angZ)
+        self.x = newP.x
+        self.y = newP.y
+        self.z = newP.z
     
     def isContent(self, punto: Point):
         t1, t2, t3 = None, None, None
@@ -231,6 +240,10 @@ class Util:
         t = (D-A*x-B*y-C*z)/denominador
         
         return recta.getPoint(t)
+
+    def getCutPoints(rect1, rect2):
+        pass
+
 
     def multiplicar_matrices(matriz_A, matriz_B):
         filas_A = len(matriz_A)

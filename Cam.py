@@ -6,8 +6,8 @@ class Cam:
         self.d = d
         self.puntoDeLaCamara = Point(centro.x+self.d, centro.y, centro.z)
         #Estoy asumiendo que cuando se inicializa por primera vez la cam el jugador mira hacia adelante
-        self.axisX2D = Rect(Point(self.puntoDeLaCamara.x, self.puntoDeLaCamara.y+1), self.puntoDeLaCamara)
-        self.axisY2D = Rect(Point(self.puntoDeLaCamara.x, self.puntoDeLaCamara.y+1).rotar(90, 0, 0), self.puntoDeLaCamara)
+        self.axisX2D = Rect(Point(self.puntoDeLaCamara.x, self.puntoDeLaCamara.y+1, self.puntoDeLaCamara.z), self.puntoDeLaCamara)
+        self.axisY2D = Rect(Point(self.puntoDeLaCamara.x, self.puntoDeLaCamara.y+1, self.puntoDeLaCamara.z).rotar(0, -90, 0), self.puntoDeLaCamara)
         self.actualizar_plano()
 
     def rotarCamara(self, angulo_x, angulo_y):
@@ -29,4 +29,7 @@ class Cam:
         ray = Rect(self.centro, point)
         cutPoint = Util.interseccion_recta_plano(ray, self.vectorNormal)
         #Buscar los puntos de corte con los ejes 2D para encontrar las coordenadas 2D
-        Rect(cutPoint, self.axisX2D)
+        pInX = Util.interseccion_recta_recta(Rect(cutPoint, self.axisY2D.vDir), self.axisX2D)
+        pInY = Util.interseccion_recta_recta(Rect(cutPoint, self.axisX2D.vDir), self.axisY2D)
+        x2d = Util.Vector.createVector(cutPoint, pInX).getMod()
+        y2d = Util.Vector.createVector(cutPoint, pInY).getMod()

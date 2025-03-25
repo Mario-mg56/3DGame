@@ -241,6 +241,29 @@ class Util:
         
         return recta.getPoint(t)
 
+
+    def interseccion_recta_recta(r:Rect, s:Rect):
+        rx,ry,rz = r.x,r.y,r.z
+        rvx,rvy,rvz = r.vDir.x,r.vDir.y,r.vDir.z
+        sx,sy,sz = s.x,s.y,s.z
+        svx,svy,svz = s.vDir.x,s.vDir.y,s.vDir.z
+        t=0
+        denominador = rvx-svx
+        if abs(denominador) < 1e-6:
+            denominador = rvy-svy
+            if abs(denominador) < 1e-6:
+                denominador = rvz-svz
+                if abs(denominador) < 1e-6:
+                    return None
+                else:
+                    t = (rz-sz)/denominador
+            else:
+                t = (ry-sy)/denominador
+        else:
+            t = (rx-sx)/denominador
+        return r.getPoint(t)
+
+
     def getCutPoints(rect1, rect2):
         pass
 

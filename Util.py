@@ -8,6 +8,9 @@ class Point:
 
     def toMatrix(self):
         return Matrix(1,3, [self.x, self.y, self.z])
+    
+    def toVector(self):
+        return Vector(self.x, self.y, self.z)
         
     def __sub__(self, punto):
         return Point(self.x-punto.x,self.y-punto.y,self.z-punto.z)
@@ -47,7 +50,12 @@ class Vector:
         return Matrix(1,3, [self.x, self.y, self.z])
     
     def getMod(self): #Devuelve el módulo del vector
-        return ((self.fin.x-self.inicio.x)**2 + (self.fin.y-self.inicio.y)**2 + (self.fin.z-self.inicio.z)**2)**0.5
+        return ((self.x)**2 + (self.y)**2 + (self.z)**2)**0.5
+    
+    
+    #Dejo esto aqui pro si acaso pero no existe inicio ni fin
+    # def getMod(self): #Devuelve el módulo del vector
+    #     return ((self.fin.x-self.inicio.x)**2 + (self.fin.y-self.inicio.y)**2 + (self.fin.z-self.inicio.z)**2)**0.5
     
     def normalize(self):
         x_normalized = self.x/self.getMod()
@@ -60,7 +68,8 @@ class Vector:
         self.x = v.x
         self.y = v.y
         self.z = v.z
-    
+    def __str__(self):
+        return f"x:{self.x} y:{self.y} z:{self.z}" 
 
 class Matrix:
     def __init__(self, cols,rows, datos=None):
@@ -216,6 +225,24 @@ class PlaneNor: #Plano a partir de punto y vector normal al plano
 
 class Util:
     class Vector:
+        def producto_cruzado(v:Vector, u:Vector):
+            #chat gpt me dice q hay -1 pero pagina random de google me dice q no
+            return Vector(
+                (v.y * u.z) - (v.z * u.y),
+                -1*((v.x * u.z) - (v.z * u.x)),
+                (v.x * u.y) - (v.y * u.x)
+            )
+            
+        def angulo_entre_vectores(v:Vector, u:Vector):
+            modulo_v = v.getMod()
+            modulo_u = u.getMod()
+            
+            return math.degrees(math.acos(Util.Vector.productoPunto(u,v)/(modulo_u*modulo_v)))
+        
+        def productoPunto(v:Vector, u:Vector):
+            return v.x*u.x+v.y*u.y+v.z*u.z
+        
+        
         def createVector(point0, pointf):
             return Vector(point0.x - pointf.x, point0.y - pointf.y, point0.z - pointf.z)
         def getUp():
@@ -227,7 +254,7 @@ class Util:
         def getLeft():
             return Vector(-1,0,0)   
     
-    def interseccion_recta_plano(recta:Rect, plano:PlaneNor):
+    def interseccion_recta_plano(recta:Rect, plano:PlaneNor)->Point:
         v = recta.vDir  # Vector dirección de la recta
         x = recta.x
         y = recta.y

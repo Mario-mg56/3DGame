@@ -25,7 +25,7 @@ class Cam:
         self.vectorNormal= Util.Vector.createVector(self.centro, self.puntoDeLaCamara)
         self.planoCam = PlaneNor(self.vectorNormal,self.puntoDeLaCamara)
 
-    def watch(self, point:Point):
+    def watchMario(self, point:Point):
         ray = Rect(self.centro, point)
         cutPoint = Util.interseccion_recta_plano(ray, self.vectorNormal)
         #Buscar los puntos de corte con los ejes 2D para encontrar las coordenadas 2D
@@ -33,3 +33,18 @@ class Cam:
         pInY = Util.interseccion_recta_recta(Rect(cutPoint, self.axisX2D.vDir), self.axisY2D)
         x2d = Util.Vector.createVector(cutPoint, pInX).getMod()
         y2d = Util.Vector.createVector(cutPoint, pInY).getMod()
+    
+    def watchDiego(self, point:Point):
+        ray = Rect(self.centro, point)
+        cutPoint = Util.interseccion_recta_plano(ray, self.vectorNormal)
+        #Conseguir el vector que se refiere al eje x local
+        Vector_X_local = Util.Vector.producto_cruzado(cutPoint.toVector(),Util.Vector.getDown())
+        #Conseguir el vector del centro al punto creo q se puede mejorar
+        vectorAlPunto = Util.Vector.createVector(cutPoint,self.puntoDeLaCamara)
+        #COnseguir la distancia
+        distancia = vectorAlPunto.getMod()
+        #COnseguir el angulo entre anmbos vector los devuelve en angulos
+        angulo = Util.Vector.angulo_entre_vectores(Vector_X_local,vectorAlPunto)
+        x_local = distancia*math.cos(angulo)
+        y_local = distancia*math.sin(angulo)
+        return x_local,y_local

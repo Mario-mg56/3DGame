@@ -66,9 +66,9 @@ class Cam:
         
         # print("xlocal:",self.vector_X_local,"vectoralpunto:", vectorAlPunto)
         angulo = Util.Vector.angulo_entre_vectores(self.vector_X_local,vectorAlPunto)
-        print("angulo:",angulo, "distancia:",distancia)
+        # print("angulo:",angulo, "distancia:",distancia)
         x_local = distancia*math.cos(angulo)
         y_local = distancia*math.sin(angulo)
-        print("x:",x_local,"y:",y_local)
+        # print("x:",x_local,"y:",y_local)
         return Point2D(x_local,y_local)
     

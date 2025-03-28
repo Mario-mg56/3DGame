@@ -10,7 +10,7 @@ clock = pg.time.Clock() #Control de FPS
 
 gm = GameManager()
 
-gm.cam = Cam(Point(0,0,0), 5, gm)
+gm.cam = Cam(Point(0,0,0), 400, gm)
 gm.screen = Screen(gm)
 
 # cube = Cube(50,0,0,200)
@@ -18,14 +18,17 @@ gm.screen = Screen(gm)
 # gm.addPoints(cube.getPoints())
 
 # gm.addPoint(Point(7,4,2))
-gm.addPoint(Point(40, 10, -10))  # A
-gm.addPoint(Point(60, 10, -10))  # B
-gm.addPoint(Point(40, 10, 10))   # C
-gm.addPoint(Point(60, 10, 10))   # D
-gm.addPoint(Point(40, -10, -10)) # E
-gm.addPoint(Point(60, -10, -10)) # F
-gm.addPoint(Point(40, -10, 10))  # G
-gm.addPoint(Point(60, -10, 10))  # H
+
+
+heightSquare = 0
+gm.addPoint(Point(40, heightSquare, -10))  # A
+gm.addPoint(Point(60, heightSquare, -10))  # B
+gm.addPoint(Point(40, heightSquare, 10))   # C
+gm.addPoint(Point(60, heightSquare, 10))   # D
+gm.addPoint(Point(40, heightSquare-20, -10)) # E
+gm.addPoint(Point(60, heightSquare-20, -10)) # F
+gm.addPoint(Point(40, heightSquare-20, 10))  # G
+gm.addPoint(Point(60, heightSquare-20, 10))  # H
 
 
 gm.update()

@@ -27,5 +27,6 @@ class Screen:
     def update(self):
         for p in self.gm.info2d:
             pf = self.fixCoords(p.x, p.y)
-            self.draw(pf)
+            if pf is not None:
+                self.draw(pf)
 

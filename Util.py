@@ -52,11 +52,6 @@ class Vector:
     def getMod(self): #Devuelve el módulo del vector
         return ((self.x)**2 + (self.y)**2 + (self.z)**2)**0.5
     
-    
-    #Dejo esto aqui pro si acaso pero no existe inicio ni fin
-    # def getMod(self): #Devuelve el módulo del vector
-    #     return ((self.fin.x-self.inicio.x)**2 + (self.fin.y-self.inicio.y)**2 + (self.fin.z-self.inicio.z)**2)**0.5
-    
     def normalize(self):
         x_normalized = self.x/self.getMod()
         y_normalized = self.y/self.getMod()
@@ -225,7 +220,7 @@ class PlaneNor: #Plano a partir de punto y vector normal al plano
 
 class Util:
     class Vector:
-        def producto_cruzado(v:Vector, u:Vector):
+        def producto_vectorial(v:Vector, u:Vector):
             #chat gpt me dice q hay -1 pero pagina random de google me dice q no
             return Vector(
                 (v.y * u.z) - (v.z * u.y),

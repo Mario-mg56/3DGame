@@ -81,38 +81,4 @@ class Cube(Object):
     def get(self):
         return Plane(self.getA, self.getB, self.getE)
 
-
-class GameManager:
-    def __init__(self):
-        self.objs = set()
-    
-    def search(self, x, y, z):
-        for i in self.objs:
-            if (i.x == x and i.y == y and i.z == z):
-                return i
-        return None
-    
-    def add(self, x, y, z, edge = None):
-        if self.search(x, y, z) is not None:
-            print("Error hay otro objeto en esa posición")
-            return
-        else:
-            obj = Cube(x, y, z, edge) 
-        self.objs.add(obj)
-        return obj
-
-    def remove(self, x, y, z):
-        self.objs.remove(self.search(x, y, z))
-
-    def move(self, obj, x, y, z):
-        if self.search(x, y, z) is not None:
-            print("Error hay otro objeto en el destino")
-            return
-        obj.x = x
-        obj.y = y
-        obj.z = z
-    
-    def printAll(self):
-        for i in self.objs:
-            print(i)
     

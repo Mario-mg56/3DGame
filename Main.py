@@ -1,6 +1,7 @@
 import pygame as pg
 from Objects import *
 from Util import *
+from GameManager import GameManager
 
 pg.init()
 screen = pg.display.set_mode((650, 650))

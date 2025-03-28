@@ -48,19 +48,27 @@ class Cam:
 
     def info3Dto2D(self):
         for i in self.gm.info3d:
-            self.gm.info2d.add(self.watchDiego(i))
+            p = self.watchDiego(i)
+            print(p)
+            self.gm.info2d.add(p)
     
     def watchDiego(self, point:Point):
-        ray = Rect(self.centro, point)
+        ray = Rect(point,self.centro,)
+        # print("vectoralpunto",ray.vDir)
         cutPoint = Util.interseccion_recta_plano(ray, self.planoCam)
         
         #Conseguir el vector del centro al punto creo q se puede mejorar
         vectorAlPunto = Util.Vector.createVector(cutPoint,self.puntoDeLaCamara)
         #COnseguir la distancia
         distancia = vectorAlPunto.getMod()
+        # print("xlocal:",self.vector_X_local,"punto corte:",cutPoint,"punto_camara:",self.puntoDeLaCamara)
         #Conseguir el angulo entre anmbos vector los devuelve en angulos
+        
+        # print("xlocal:",self.vector_X_local,"vectoralpunto:", vectorAlPunto)
         angulo = Util.Vector.angulo_entre_vectores(self.vector_X_local,vectorAlPunto)
+        print("angulo:",angulo, "distancia:",distancia)
         x_local = distancia*math.cos(angulo)
         y_local = distancia*math.sin(angulo)
+        print("x:",x_local,"y:",y_local)
         return Point2D(x_local,y_local)
     

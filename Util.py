@@ -232,7 +232,7 @@ class Util:
             modulo_v = v.getMod()
             modulo_u = u.getMod()
             
-            return math.degrees(math.acos(Util.Vector.productoPunto(u,v)/(modulo_u*modulo_v)))
+            return math.acos(Util.Vector.productoPunto(u,v)/(modulo_u*modulo_v))
         
         def productoPunto(v:Vector, u:Vector):
             return v.x*u.x+v.y*u.y+v.z*u.z
@@ -259,7 +259,7 @@ class Util:
         denominador = (A*v.x+B*v.y+C*v.z)
         if abs(denominador) < 1e-6:
             return None
-        t = (D-A*x-B*y-C*z)/denominador
+        t = -(A * x + B * y + C * z + D)/denominador
         
         return recta.getPoint(t)
 

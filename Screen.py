@@ -16,7 +16,7 @@ class Screen:
     def fixCoords(self, x, y):
         if (abs(x) > (self.width/2) or abs(y) > (self.height/2)):
             return None
-        return Point2D(x+self.width/2, y+self.height/2)
+        return Point2D(x+self.width/2, -1*y+self.height/2)
 
     def draw(self, p:Point2D, color=(255, 255, 255)):
         pg.draw.circle(self.screen, color, (p.x, p.y), 2)

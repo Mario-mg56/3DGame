@@ -1,10 +1,11 @@
 import math, pygame as pg
 
 class Point:
-    def __init__(self, x, y, z):
+    def __init__(self, x, y, z, name=None):
         self.x = x
         self.y = y
         self.z = z
+        self.name = name
 
     def toMatrix(self):
         return Matrix(1,3, [self.x, self.y, self.z])
@@ -227,10 +228,31 @@ class Util:
                 -1*((v.x * u.z) - (v.z * u.x)),
                 (v.x * u.y) - (v.y * u.x)
             )
+        
+        
+        def getCuadrante_y_angulo(v:Vector, vx:Vector, vy:Vector):
+            anguloX = Util.Vector.angulo_entre_vectores(v,vx)
+            anguloY = Util.Vector.angulo_entre_vectores(v,vy)
             
+            angX = math.degrees(anguloX)
+            angY = math.degrees(anguloY)
+            print(angX,angY,"xdddd")
+            if 0 <= angX <= 90:
+                if 0 <= angY <= 90:
+                    return 1, 1, anguloX
+                elif 91 <= angY <= 180:
+                    return 1, -1, anguloX
+            elif 91 <= angX <= 180:
+                if 0 <= angY <= 90:
+                    return -1, 1, anguloX
+                elif 91 <= angY <= 180:
+                    return -1, -1, anguloX
+            return 0, 0, 0  # o algún valor predeterminado que tenga sentido en tu caso
+                
         def angulo_entre_vectores(v:Vector, u:Vector):
             modulo_v = v.getMod()
             modulo_u = u.getMod()
+            
             
             return math.acos(Util.Vector.productoPunto(u,v)/(modulo_u*modulo_v))
         

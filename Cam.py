@@ -35,6 +35,7 @@ class Cam:
         #Conseguir el vector que se refiere al eje x local
         vectorALaCamara = Util.Vector.createVector(self.centro,self.puntoDeLaCamara)
         self.vector_X_local = Util.Vector.producto_vectorial(vectorALaCamara,Util.Vector.getDown())
+        self.vector_Y_local = Util.Vector.producto_vectorial(vectorALaCamara,self.vector_X_local)
 
     # def watchMario(self, point:Point):
     #     ray = Rect(self.centro, point)
@@ -49,11 +50,12 @@ class Cam:
     def info3Dto2D(self):
         for i in self.gm.info3d:
             p = self.watchDiego(i)
-            print(p)
+            # print(p)
             self.gm.info2d.add(p)
     
     def watchDiego(self, point:Point):
-        ray = Rect(point,self.centro,)
+        print("Punto",point.name)
+        ray = Rect(self.centro,point)
         # print("vectoralpunto",ray.vDir)
         cutPoint = Util.interseccion_recta_plano(ray, self.planoCam)
         
@@ -65,10 +67,10 @@ class Cam:
         #Conseguir el angulo entre anmbos vector los devuelve en angulos
         
         # print("xlocal:",self.vector_X_local,"vectoralpunto:", vectorAlPunto)
-        angulo = Util.Vector.angulo_entre_vectores(self.vector_X_local,vectorAlPunto)
-        # print("angulo:",angulo, "distancia:",distancia)
+        [signx,signy,angulo] = Util.Vector.getCuadrante_y_angulo(vectorAlPunto,self.vector_X_local,self.vector_Y_local)
+        print("angulo:",math.degrees(angulo), "distancia:",distancia)
         x_local = distancia*math.cos(angulo)
-        y_local = distancia*math.sin(angulo)
+        y_local = distancia*math.sin(angulo)*signy
         # print("x:",x_local,"y:",y_local)
         return Point2D(x_local,y_local)
     

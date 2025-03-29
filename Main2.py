@@ -20,8 +20,10 @@ gm.screen = Screen(gm)
 # gm.addPoint(Point(7,4,2))
 
 
-heightSquare = 0
-gm.addPoint(Point(40, heightSquare, -10))  # A
+heightSquare = 7
+gm.addPoint(Point(401,1,0,"CAM"))
+
+gm.addPoint(Point(40, heightSquare, -10,"A"))  # A
 gm.addPoint(Point(60, heightSquare, -10))  # B
 gm.addPoint(Point(40, heightSquare, 10))   # C
 gm.addPoint(Point(60, heightSquare, 10))   # D

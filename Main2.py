@@ -10,7 +10,7 @@ clock = pg.time.Clock() #Control de FPS
 
 gm = GameManager()
 
-gm.cam = Cam(Point(0,0,0), 400, gm)
+gm.cam = Cam(Point(0,0,0), 10, gm)
 gm.screen = Screen(gm)
 
 # cube = Cube(50,0,0,200)

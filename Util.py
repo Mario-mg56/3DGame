@@ -160,7 +160,7 @@ class Rect:
         self.y = newP.y
         self.z = newP.z
     
-    def isContent(self, punto: Point):
+    def getT(self, punto: Point):
         t1, t2, t3 = None, None, None
         
         if self.vDir.x != 0:
@@ -183,8 +183,10 @@ class Rect:
         for i in t : 
             if i is not None : 
                 tArray.append(i)
+        if len(set(tArray))==1:
+            return tArray[0]
         
-        return len(set(tArray))==1
+        return None
 
 
 class Plane: #Plano a partir de 3 puntos en el plano

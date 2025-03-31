@@ -20,6 +20,7 @@ class InputManager:
 
     def update(self):
         if self.input is not None:
+            print(self.gm.cam.centro)
             self.gm.player.move(self.input)
         self.input = None
         self.camInput = None

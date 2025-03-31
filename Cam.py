@@ -59,8 +59,7 @@ class Cam:
     
     def watchDiego(self, point:Point):
         # print("Punto",point.name)
-        print(self.centro)
-        
+        # print(self.centro)
         ray = Rect(self.centro,point)
         # print("vectoralpunto",ray.vDir)
         cutPoint = Util.interseccion_recta_plano(ray, self.planoCam)

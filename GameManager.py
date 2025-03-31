@@ -15,7 +15,7 @@ class GameManager:
         self.player = None
         self.cam = None
         self.screen = None
-        reloadScreen = True
+        #reloadScreen = True
 
     #_instance = None  # Variable de clase para almacenar la instancia única
 

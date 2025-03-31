@@ -20,9 +20,11 @@ class InputManager:
 
     def update(self):
         if self.input is not None:
-            print(self.gm.cam.centro)
-            print(self.gm.cam.puntoDeLaCamara)
+            # print(self.gm.cam.centro)
+            # print(self.gm.cam.puntoDeLaCamara)
             self.gm.player.move(self.input)
+        if self.camInput is not None:
+            self.gm.cam.listenRotationCamera(self.camInput)
         self.input = None
         self.camInput = None
         self.checkInputs()
@@ -55,10 +57,10 @@ class InputManager:
         
         # Cam listeners
         if keys[pg.K_UP]:
-            if not keys[pg.K_a] and not keys[pg.K_d]:
+            if not keys[pg.K_LEFT] and not keys[pg.K_RIGHT]:
                 self.camInput = Input.UP
         if keys[pg.K_DOWN]:
-            if not keys[pg.K_a] and not keys[pg.K_d]:
+            if not keys[pg.K_LEFT] and not keys[pg.K_RIGHT]:
                 self.camInput = Input.DOWN
         if keys[pg.K_LEFT]:
             if keys[pg.K_UP] and not keys[pg.K_DOWN]:

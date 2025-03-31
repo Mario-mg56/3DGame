@@ -21,6 +21,7 @@ class InputManager:
     def update(self):
         if self.input is not None:
             print(self.gm.cam.centro)
+            print(self.gm.cam.puntoDeLaCamara)
             self.gm.player.move(self.input)
         self.input = None
         self.camInput = None

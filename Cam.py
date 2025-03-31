@@ -60,14 +60,16 @@ class Cam:
     def watchDiego(self, point:Point):
         # print("Punto",point.name)
         # print(self.centro)
+        
         ray = Rect(self.centro,point)
+        
         # print("vectoralpunto",ray.vDir)
         cutPoint = Util.interseccion_recta_plano(ray, self.planoCam)
         if cutPoint is None:    
             return None
         #el parametro T crece linealmente de manera positiva hacia el segundo punto encontes el parametro t para el plano debe estar entre el origen 0 y el punto origen
-        # if not (0 >= ray.getT(cutPoint) >= ray.getT(point)):
-        #     return None
+        if not (0 >= ray.getT(cutPoint) >= ray.getT(point)):
+            return None
         #Conseguir el vector del centro al punto creo q se puede mejorar
         vectorAlPunto = Util.Vector.createVector(cutPoint,self.puntoDeLaCamara)
         #COnseguir la distancia

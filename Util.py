@@ -175,17 +175,17 @@ class Rect:
         t1, t2, t3 = None, None, None
         
         if self.vDir.x != 0:
-            t1 = (punto.x - self.x) / self.vDir.x
+            t1 = round((punto.x - self.x) / self.vDir.x, 3)
         elif self.x != punto.x:
             return None
 
         if self.vDir.y != 0:
-            t2 = (punto.y - self.y) / self.vDir.y
+            t2 = round((punto.y - self.y) / self.vDir.y,3)
         elif self.y != punto.y:
             return None
 
         if self.vDir.z != 0:
-            t3 = (punto.z - self.z) / self.vDir.z
+            t3 = round((punto.z - self.z) / self.vDir.z,3)
         elif self.z != punto.z:
             return None
         

@@ -19,10 +19,10 @@ class Cam:
         self.actualizar_plano()
         self.info3Dto2D()
 
-    def rotarCamara(self, angx, angy):
+    def rotarCamara(self, angx = 0, angy = 0, angz = 0):
         puntoCamaraCentrado = self.puntoDeLaCamara - self.centro
         
-        puntoCamaraCentrado.rotar(angx, angy, 0)
+        puntoCamaraCentrado.rotar(angx, angy, angz)
         self.puntoDeLaCamara = puntoCamaraCentrado + self.centro
         self.vector_X_local.normalize()    
         self.actualizar_plano() #Actualizar posición plano cámara
@@ -94,9 +94,9 @@ class Cam:
         elif input == Input.DOWN:
             self.rotarCamara(0, self.vrc*-1)
         elif input == Input.LEFT:
-            self.rotarCamara(self.vrc, 0)
+            self.rotarCamara(angy=self.vrc)
         elif input == Input.RIGHT:
-            self.rotarCamara(self.vrc*-1, 0)
+            self.rotarCamara(angy=self.vrc*-1)
         elif input == Input.LEFTUP:
             self.rotarCamara(0, self.vrc)
             self.rotarCamara(self.vrc, 0)
@@ -109,3 +109,4 @@ class Cam:
         elif input == Input.RIGHTDOWN:
             self.rotarCamara(0, self.vrc*-1)
             self.rotarCamara(self.vrc*-1, 0)
+

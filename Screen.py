@@ -23,8 +23,12 @@ class Screen:
 
     def drawLine(self, p1:Point2D, p2:Point2D, color=(255, 255, 255)):
         pg.draw.line(self.screen, color, (p1.x, p2.y), (p2.z, p2.y))
+
+    def fill(self, color=(0, 0, 0)):
+        self.screen.fill(color)
     
     def update(self):
+        self.fill()
         for p in self.gm.info2d:
             pf = self.fixCoords(p.x, p.y)
             if pf is not None:

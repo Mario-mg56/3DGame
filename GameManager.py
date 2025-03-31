@@ -32,6 +32,7 @@ class GameManager:
     #     return cls._instance
     
     def update(self):
+        self.info2d = set()
         self.cam.update()
         self.screen.update()
 

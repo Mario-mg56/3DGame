@@ -21,22 +21,18 @@ class Cam:
 
     def rotarCamara(self, angx, angy):
         puntoCamaraCentrado = self.puntoDeLaCamara - self.centro
-        print("Antes: ", puntoCamaraCentrado)
-        puntoCamaraCentrado.rotar(angx, angy, 0)
-        print("Después: ", puntoCamaraCentrado)
-        self.puntoDeLaCamara = puntoCamaraCentrado + self.centro
-        #self.puntoDeLaCamara.toVector() No sabemos que hace esto
         
-        #Actualizar ejes del plano
-        # self.axisX2D.rotate(angulo_x, angulo_y, 0)
-        # self.axisY2D.rotate(angulo_x, angulo_y, 0)
-
+        puntoCamaraCentrado.rotar(angx, angy, 0)
+        self.puntoDeLaCamara = puntoCamaraCentrado + self.centro
+        self.vector_X_local.normalize()    
         self.actualizar_plano() #Actualizar posición plano cámara
 
 
     def actualizar_plano(self):
         self.centro = self.gm.player.position
-        self.puntoDeLaCamara = Point(self.centro.x+self.d, self.centro.y, self.centro.z)
+        
+        # self.puntoDeLaCamara = Point(self.centro.x+self.d, self.centro.y, self.centro.z)
+        
         self.vectorNormal= Util.Vector.createVector(self.centro, self.puntoDeLaCamara)
         self.planoCam = PlaneNor(self.vectorNormal,self.puntoDeLaCamara)
         #Conseguir el vector que se refiere al eje x local

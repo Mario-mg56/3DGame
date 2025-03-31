@@ -20,21 +20,29 @@ class Entity:
         elif input == Input.UP:
             print("Estoy subiendo")
             self.position += camVector
+            self.gm.cam.puntoDeLaCamara += camVector
         elif input == Input.DOWN:
             self.position -= camVector
+            self.gm.cam.puntoDeLaCamara -= camVector
         elif input == Input.LEFT:
             self.position += Vector(camVector.z*-1, 0, camVector.x)
+            self.gm.cam.puntoDeLaCamara += Vector(camVector.z*-1, 0, camVector.x)
         elif input == Input.RIGHT:
             self.position += Vector(camVector.z, 0, camVector.x*-1)
+            self.gm.cam.puntoDeLaCamara += Vector(camVector.z, 0, camVector.x*-1)
         elif input == Input.LEFTUP:
             self.position += camVector.rotar(angulo_y=-45)
+            self.gm.cam.puntoDeLaCamara += camVector.rotar(angulo_y=-45)
         elif input == Input.LEFTDOWN:
             self.position += camVector.rotar(angulo_y=-135)
+            self.gm.cam.puntoDeLaCamara += camVector.rotar(angulo_y=-135)
         elif input == Input.RIGHTUP:
             self.position += camVector.rotar(angulo_y=45)
+            self.gm.cam.puntoDeLaCamara += camVector.rotar(angulo_y=-135)
         elif input == Input.RIGHTDOWN:
             self.position += camVector.rotar(angulo_y=135)
-
+            self.gm.cam.puntoDeLaCamara += camVector.rotar(angulo_y=135)
+        
         print("New position: ", self.position.x, self.position.y, self.position.z)
 
     def teleport(self, target:Point):

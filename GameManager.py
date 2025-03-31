@@ -3,6 +3,7 @@ from Objects import *
 from Util import *
 from Screen import *
 from Cam import *
+from InputManager import InputManager
 
 class GameManager:
 
@@ -10,8 +11,11 @@ class GameManager:
         self.info2d = set()
         self.info3d = set()
         self.objs = set()
+        self.InputManager = None
+        self.player = None
         self.cam = None
         self.screen = None
+        reloadScreen = True
 
     #_instance = None  # Variable de clase para almacenar la instancia única
 
@@ -33,8 +37,11 @@ class GameManager:
     
     def update(self):
         self.info2d = set()
+        # if self.reloadScreen:
         self.cam.update()
+            # self.reloadScreen = False
         self.screen.update()
+        self.InputManager.update()
 
     def search(self, x, y, z):
         for i in self.objs:

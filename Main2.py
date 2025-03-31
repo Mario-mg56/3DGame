@@ -4,14 +4,19 @@ from Util import *
 from Screen import *
 from Cam import *
 from GameManager import GameManager
+from InputManager import *
+from Entity import Entity
 
 pg.init()
 clock = pg.time.Clock() #Control de FPS
 
 gm = GameManager()
 
-gm.cam = Cam(Point(0,0,0), 400, gm)
+gm.InputManager = InputManager(gm)
+gm.player = Entity(Point(0, 0, 0), gm, 3, "Player")
+gm.cam = Cam(400, gm)
 gm.screen = Screen(gm)
+
 
 # cube = Cube(50,0,0,200)
 
@@ -33,29 +38,19 @@ gm.addPoint(Point(40, heightSquare-20, 10))  # G
 gm.addPoint(Point(60, heightSquare-20, 10))  # H
 
 
-gm.update()
 
 
-#Bucle del juego
+# Bucle del juego
 running = True
 while running:
     for event in pg.event.get():
         if event.type == pg.QUIT:
             running = False
-        elif event.type == pg.KEYDOWN:
-            if event.key == pg.K_UP:
-                pass
-            elif event.key == pg.K_DOWN:
-                pass
-            elif event.key == pg.K_LEFT:
-                pass
-            elif event.key == pg.K_RIGHT:
-                pass
-            elif event.key == pg.K_SPACE:
-                pass
-    
 
-    clock.tick(60) #Control de FPS
-    pg.display.flip() #Actualizar la pantalla
+    gm.update()
+
+
+    clock.tick(60)  # Control de FPS
+    pg.display.flip()  # Actualizar la pantalla
 
 pg.quit()

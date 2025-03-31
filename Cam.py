@@ -2,10 +2,10 @@ from Util import *
 from GameManager import GameManager
 
 class Cam:
-    def __init__(self, centro, d, gm:GameManager):
-        self.centro = centro
+    def __init__(self, d, gm:GameManager):
+        self.centro = gm.player.position
         self.d = d
-        self.puntoDeLaCamara = Point(centro.x+self.d, centro.y, centro.z)
+        self.puntoDeLaCamara = Point(self.centro.x+self.d, self.centro.y, self.centro.z)
         self.gm = gm
         #Estoy asumiendo que cuando se inicializa por primera vez la cam el jugador mira hacia adelante
         # self.axisX2D = Rect(Point(self.puntoDeLaCamara.x, self.puntoDeLaCamara.y+1, self.puntoDeLaCamara.z), self.puntoDeLaCamara)
@@ -14,13 +14,14 @@ class Cam:
         self.info3Dto2D()
 
     def update(self):
+        self.actualizar_plano()
         self.info3Dto2D()
 
     def rotarCamara(self, angulo_x, angulo_y):
         puntoCamaraCentrado = self.puntoDeLaCamara - self.centro
         puntoCamaraCentrado.rotar(angulo_x, angulo_y, 0)
         self.puntoDeLaCamara = puntoCamaraCentrado + self.centro
-
+        self.puntoDeLaCamara.tovector()
         #Actualizar ejes del plano
         self.axisX2D.rotate(angulo_x, angulo_y, 0)
         self.axisY2D.rotate(angulo_x, angulo_y, 0)
@@ -30,12 +31,14 @@ class Cam:
         
 
     def actualizar_plano(self):
+        self.centro = self.gm.player.position
+        self.puntoDeLaCamara = Point(self.centro.x+self.d, self.centro.y, self.centro.z)
         self.vectorNormal= Util.Vector.createVector(self.centro, self.puntoDeLaCamara)
         self.planoCam = PlaneNor(self.vectorNormal,self.puntoDeLaCamara)
         #Conseguir el vector que se refiere al eje x local
-        vectorALaCamara = Util.Vector.createVector(self.centro,self.puntoDeLaCamara)
-        self.vector_X_local = Util.Vector.producto_vectorial(vectorALaCamara,Util.Vector.getDown())
-        self.vector_Y_local = Util.Vector.producto_vectorial(vectorALaCamara,self.vector_X_local)
+        self.vectorALaCamara = Util.Vector.createVector(self.centro,self.puntoDeLaCamara)
+        self.vector_X_local = Util.Vector.producto_vectorial(self.vectorALaCamara,Util.Vector.getDown())
+        self.vector_Y_local = Util.Vector.producto_vectorial(self.vectorALaCamara,self.vector_X_local)
 
     # def watchMario(self, point:Point):
     #     ray = Rect(self.centro, point)
@@ -55,14 +58,17 @@ class Cam:
                 self.gm.info2d.add(p)
     
     def watchDiego(self, point:Point):
-        print("Punto",point.name)
+        # print("Punto",point.name)
+        print(self.centro)
+        
         ray = Rect(self.centro,point)
         # print("vectoralpunto",ray.vDir)
         cutPoint = Util.interseccion_recta_plano(ray, self.planoCam)
-        
-        #el parametro T crece linealmente de manera positiva hacia el segundo punto encontes el parametro t para el plano debe estar entre el origen 0 y el punto origen
-        if not (0 >= ray.getT(cutPoint) >= ray.getT(point)):
+        if cutPoint is None:    
             return None
+        #el parametro T crece linealmente de manera positiva hacia el segundo punto encontes el parametro t para el plano debe estar entre el origen 0 y el punto origen
+        # if not (0 >= ray.getT(cutPoint) >= ray.getT(point)):
+        #     return None
         #Conseguir el vector del centro al punto creo q se puede mejorar
         vectorAlPunto = Util.Vector.createVector(cutPoint,self.puntoDeLaCamara)
         #COnseguir la distancia
@@ -72,7 +78,7 @@ class Cam:
         
         # print("xlocal:",self.vector_X_local,"vectoralpunto:", vectorAlPunto)
         [signx,signy,angulo] = Util.Vector.getCuadrante_y_angulo(vectorAlPunto,self.vector_X_local,self.vector_Y_local)
-        print("angulo:",math.degrees(angulo), "distancia:",distancia)
+        #print("angulo:",math.degrees(angulo), "distancia:",distancia)
         x_local = distancia*math.cos(angulo)
         y_local = distancia*math.sin(angulo)*signy
         # print("x:",x_local,"y:",y_local)

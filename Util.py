@@ -27,6 +27,7 @@ class Point:
         self.x = p.x
         self.y = p.y
         self.z = p.z
+        return p
     
 
 
@@ -53,17 +54,27 @@ class Vector:
     def getMod(self): #Devuelve el módulo del vector
         return ((self.x)**2 + (self.y)**2 + (self.z)**2)**0.5
     
+    def __sub__(self, vector):
+        return Vector(self.x-vector.x,self.y-vector.y,self.z-vector.z)
+    
+    def __add__(self, vector):
+        return Vector(self.x+vector.x,self.y+vector.y,self.z+vector.z)
+    
+    def __mul__(self, escalar):
+        return Vector(self.x*escalar,self.y*escalar,self.z*escalar)
+    
     def normalize(self):
         x_normalized = self.x/self.getMod()
         y_normalized = self.y/self.getMod()
         z_normalized = self.z/self.getMod()
         return Vector(x_normalized,y_normalized,z_normalized) 
 
-    def rotar(self, angulo_x, angulo_y, angulo_z):
+    def rotar(self, angulo_x=0, angulo_y=0, angulo_z=0):
         v = self.toMatrix().rotar(angulo_x,angulo_y,angulo_z).toVector()
         self.x = v.x
         self.y = v.y
         self.z = v.z
+        return v
     def __str__(self):
         return f"x:{self.x} y:{self.y} z:{self.z}" 
 
@@ -166,17 +177,17 @@ class Rect:
         if self.vDir.x != 0:
             t1 = (punto.x - self.x) / self.vDir.x
         elif self.x != punto.x:
-            return False
+            return None
 
         if self.vDir.y != 0:
             t2 = (punto.y - self.y) / self.vDir.y
         elif self.y != punto.y:
-            return False
+            return None
 
         if self.vDir.z != 0:
             t3 = (punto.z - self.z) / self.vDir.z
         elif self.z != punto.z:
-            return False
+            return None
         
         t = [t1,t2,t3]
         tArray = []
@@ -238,7 +249,6 @@ class Util:
             
             angX = math.degrees(anguloX)
             angY = math.degrees(anguloY)
-            print(angX,angY,"xdddd")
             if 0 <= angX <= 90:
                 if 0 <= angY <= 90:
                     return 1, 1, anguloX

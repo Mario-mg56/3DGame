@@ -8,7 +8,7 @@ class Cam:
         self.d = d
         self.puntoDeLaCamara = Point(self.centro.x+self.d, self.centro.y, self.centro.z)
         self.gm = gm
-        self.vrc = 4 #Velocidad de rotacion de la camara
+        self.vrc = 2 #Velocidad de rotacion de la camara
         #Estoy asumiendo que cuando se inicializa por primera vez la cam el jugador mira hacia adelante
         # self.axisX2D = Rect(Point(self.puntoDeLaCamara.x, self.puntoDeLaCamara.y+1, self.puntoDeLaCamara.z), self.puntoDeLaCamara)
         # self.axisY2D = Rect(Point(self.puntoDeLaCamara.x, self.puntoDeLaCamara.y+1, self.puntoDeLaCamara.z).rotar(0, -90, 0), self.puntoDeLaCamara)
@@ -19,10 +19,14 @@ class Cam:
         self.actualizar_plano()
         self.info3Dto2D()
 
-    def rotarCamara(self, angx = 0, angy = 0, angz = 0):
+    def rotarCamara(self, horizontal=0,vertical=0):
         puntoCamaraCentrado = self.puntoDeLaCamara - self.centro
-        
-        puntoCamaraCentrado.rotar(angx, angy, angz)
+        print(puntoCamaraCentrado)
+        if horizontal is not 0:
+            puntoCamaraCentrado.rotar(angulo_y=horizontal)
+        if vertical is not 0:
+            puntoCamaraCentrado.rotateVertically(vertical)
+        print(puntoCamaraCentrado)
         self.puntoDeLaCamara = puntoCamaraCentrado + self.centro
         self.vector_X_local.normalize()    
         self.actualizar_plano() #Actualizar posición plano cámara
@@ -109,23 +113,23 @@ class Cam:
             return
         elif input == Input.UP:
             
-            self.rotacioCamaraY(self.vrc)
+            self.rotarCamara(vertical=self.vrc)
         elif input == Input.DOWN:
-            self.rotacioCamaraY(self.vrc)
+            self.rotarCamara(vertical=self.vrc*-1)
         elif input == Input.LEFT:
-            self.rotarCamara(angy=self.vrc)
+            self.rotarCamara(horizontal=self.vrc)
         elif input == Input.RIGHT:
-            self.rotarCamara(angy=self.vrc*-1)
+            self.rotarCamara(horizontal=self.vrc*-1)
         elif input == Input.LEFTUP:
-            self.rotarCamara(0, self.vrc)
-            self.rotarCamara(self.vrc, 0)
+            self.rotarCamara(vertical=self.vrc,horizontal=self.vrc)
+            
         elif input == Input.LEFTDOWN:
-            self.rotarCamara(0, self.vrc*-1)
-            self.rotarCamara(self.vrc, 0)
+            self.rotarCamara(vertical=self.vrc*-1,horizontal=self.vrc)
+
         elif input == Input.RIGHTUP:
-            self.rotarCamara(0, self.vrc)  
-            self.rotarCamara(self.vrc*-1, 0)
+            self.rotarCamara(vertical=self.vrc,horizontal=self.vrc*-1)
+
         elif input == Input.RIGHTDOWN:
-            self.rotarCamara(0, self.vrc*-1)
-            self.rotarCamara(self.vrc*-1, 0)
+            self.rotarCamara(vertical=self.vrc*-1,horizontal=self.vrc*-1)
+
 

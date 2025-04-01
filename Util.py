@@ -28,6 +28,19 @@ class Point:
         self.y = p.y
         self.z = p.z
         return p
+    def rotateVertically(self, angulo_y=0): #Mirar RotaciónVertical.png 
+        alpha = math.asin(self.y/math.sqrt(self.x**2+self.y**2))
+        beta = math.radians(angulo_y)
+        gamma = alpha + beta
+        sena, cosa = math.sin(alpha), math.cos(alpha)
+        seng, cosg = math.sin(gamma), math.cos(gamma)
+        self.x = self.x*cosg/cosa
+        self.z = self.z*cosg/cosa
+        if alpha == 0: #Teorema de L'Hopital cuando alfa es 0
+            self.y = math.sin(beta)
+        else:
+            self.y = self.y*seng/sena
+        return self
     
 
 
@@ -75,6 +88,19 @@ class Vector:
         self.y = v.y
         self.z = v.z
         return v
+    
+    def rotateVertically(self, angulo_y=0): #Mirar RotaciónVertical.png 
+        alpha = math.asin(self.y/math.sqrt(self.x**2+self.y**2))
+        beta = math.radians(angulo_y)
+        gamma = alpha + beta
+        sena, cosa = math.sin(alpha), math.cos(alpha)
+        seng, cosg = math.sin(gamma), math.cos(gamma)
+        if alpha == 0: #Teorema de L'Hopital cuando alfa es 0
+            self = Vector(self.x*cosg/cosa, math.sin(beta), self.z*cosg/cosa)
+        else:
+            self = Vector(self.x*cosg/cosa, self.y*seng/sena, self.z*cosg/cosa)
+        return self
+
     def __str__(self):
         return f"x:{self.x} y:{self.y} z:{self.z}" 
 

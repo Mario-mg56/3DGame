@@ -14,11 +14,11 @@ gm = GameManager()
 
 gm.InputManager = InputManager(gm)
 gm.player = Entity(Point(0, 0, 0), gm, 3, "Player")
-gm.cam = Cam(400, gm)
+gm.cam = Cam(20, gm)
 gm.screen = Screen(gm)
 
 
-cube = Cube(800,0,0,100)
+cube = Cube(40,0,0,400)
 
 gm.addPoints(cube.getPoints())
 
@@ -26,7 +26,7 @@ gm.addPoints(cube.getPoints())
 
 
 heightSquare = 7
-gm.addPoint(Point(401,1,0,"CAM"))
+#gm.addPoint(Point(401,1,0,"CAM"))
 
 # gm.addPoint(Point(40, heightSquare, -10,"A"))  # A
 # gm.addPoint(Point(60, heightSquare, -10))  # B

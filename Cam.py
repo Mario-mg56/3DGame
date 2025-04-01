@@ -85,14 +85,33 @@ class Cam:
         # print("x:",x_local,"y:",y_local)
         return Point2D(x_local,y_local)
     
+    
+    def rotacioCamaraY(self,angY):
+        vectorXenEje = self.vector_X_local
+        ang_nor = Util.Vector.angulo_entre_vectores(Util.Vector.getLeft(),vectorXenEje)
+        vectorXenEje.rotar(angulo_y=math.degrees(ang_nor))
+        if (math.isclose(vectorXenEje.normalize().x,Util.Vector.getLeft().x)):
+            self.puntoDeLaCamara.rotar(angulo_y=math.degrees(ang_nor))
+            self.puntoDeLaCamara.rotar(angulo_z=math.degrees(angY))
+            self.puntoDeLaCamara.rotar(angulo_y=-1*math.degrees(ang_nor))
+            
+        else:
+            self.puntoDeLaCamara.rotar(angulo_y=-1*math.degrees(ang_nor))
+            self.puntoDeLaCamara.rotar(angulo_z=math.degrees(angY))
+            self.puntoDeLaCamara.rotar(angulo_y=math.degrees(ang_nor))
+            
+        self.actualizar_plano()
+              
+    
     def listenRotationCamera(self, input):
         print(input)
         if input == None:
             return
         elif input == Input.UP:
-            self.rotarCamara(0, self.vrc)
+            
+            self.rotacioCamaraY(self.vrc)
         elif input == Input.DOWN:
-            self.rotarCamara(0, self.vrc*-1)
+            self.rotacioCamaraY(self.vrc)
         elif input == Input.LEFT:
             self.rotarCamara(angy=self.vrc)
         elif input == Input.RIGHT:

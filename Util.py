@@ -22,7 +22,7 @@ class Point:
     def __str__(self):
         return f"x:{self.x} y:{self.y} z:{self.z}" 
     
-    def rotar(self,angulo_x,angulo_y,angulo_z):
+    def rotar(self,angulo_x=0,angulo_y=0,angulo_z=0):
         p = self.toMatrix().rotar(angulo_x,angulo_y,angulo_z).toPoint()
         self.x = p.x
         self.y = p.y

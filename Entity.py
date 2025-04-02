@@ -32,16 +32,16 @@ class Entity:
             self.gm.cam.puntoDeLaCamara += Vector(camVector.z, 0, camVector.x*-1)
         elif input == Input.LEFTUP:
             self.position += camVector.rotar(angulo_y=-45)
-            self.gm.cam.puntoDeLaCamara += camVector.rotar(angulo_y=-45)
+            self.gm.cam.puntoDeLaCamara += camVector
         elif input == Input.LEFTDOWN:
             self.position += camVector.rotar(angulo_y=-135)
-            self.gm.cam.puntoDeLaCamara += camVector.rotar(angulo_y=-135)
+            self.gm.cam.puntoDeLaCamara += camVector
         elif input == Input.RIGHTUP:
             self.position += camVector.rotar(angulo_y=45)
-            self.gm.cam.puntoDeLaCamara += camVector.rotar(angulo_y=-135)
+            self.gm.cam.puntoDeLaCamara += camVector
         elif input == Input.RIGHTDOWN:
             self.position += camVector.rotar(angulo_y=135)
-            self.gm.cam.puntoDeLaCamara += camVector.rotar(angulo_y=135)
+            self.gm.cam.puntoDeLaCamara += camVector
         
         print("New position: ", self.position.x, self.position.y, self.position.z)
 

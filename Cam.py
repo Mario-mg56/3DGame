@@ -37,10 +37,10 @@ class Cam:
         
         # self.puntoDeLaCamara = Point(self.centro.x+self.d, self.centro.y, self.centro.z)
         
-        self.vectorNormal= Util.Vector.createVector(self.centro, self.puntoDeLaCamara)
+        self.vectorNormal= Util.Vector.createVector(self.puntoDeLaCamara,self.centro)
         self.planoCam = PlaneNor(self.vectorNormal,self.puntoDeLaCamara)
         #Conseguir el vector que se refiere al eje x local
-        self.vectorALaCamara = Util.Vector.createVector(self.centro,self.puntoDeLaCamara)
+        self.vectorALaCamara = Util.Vector.createVector(self.puntoDeLaCamara,self.centro)
         self.vector_X_local = Util.Vector.producto_vectorial(self.vectorALaCamara,Util.Vector.getDown())
         self.vector_Y_local = Util.Vector.producto_vectorial(self.vectorALaCamara,self.vector_X_local)
 

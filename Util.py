@@ -298,8 +298,8 @@ class Util:
             return v.x*u.x+v.y*u.y+v.z*u.z
         
         
-        def createVector(point0, pointf):
-            return Vector(point0.x - pointf.x, point0.y - pointf.y, point0.z - pointf.z)
+        def createVector(pointf, point0):
+            return Vector(pointf.x - point0.x, pointf.y - point0.y, pointf.z - point0.z)
         def getUp():
             return Vector(0,1,0)
         def getDown():

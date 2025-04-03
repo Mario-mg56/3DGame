@@ -14,11 +14,11 @@ gm = GameManager()
 
 gm.InputManager = InputManager(gm)
 gm.player = Entity(Point(0, 0, 0), gm, 3, "Player")
-gm.cam = Cam(20, gm)
+gm.cam = Cam(400, gm)
 gm.screen = Screen(gm)
 
 
-cube = Cube(40,0,0,400)
+cube = Cube(500,0,0,100)
 
 gm.addPoints(cube.getPoints())
 
@@ -48,7 +48,6 @@ while running:
             running = False
 
     gm.update()
-
 
     clock.tick(60)  # Control de FPS
     pg.display.flip()  # Actualizar la pantalla

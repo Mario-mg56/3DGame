@@ -18,7 +18,6 @@ class Entity:
         if input == None:
             return
         elif input == Input.UP:
-            print("Estoy subiendo")
             self.position += camVector
             self.gm.cam.puntoDeLaCamara += camVector
         elif input == Input.DOWN:

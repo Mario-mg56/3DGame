@@ -1,0 +1,20 @@
+//Dibujar una figura en LWJGL
+
+Se dibuja una figura entre las funciones glBegin(Figura) y glEND(), previamente especificando el color de dibujado con glColor3f.
+Se dibuja especificando los vértices con glVertex2f(x, y)
+
+GL_TRIANGLES → triángulos
+GL_LINES → líneas
+GL_QUADS → cuadrados
+GL_POLYGON → polígonos de más lados
+
+// Dibujar un cuadrado
+
+glColor3f(1.0f, 0.0f, 0.0f); // Rojo: R=1, G=0, B=0
+
+glBegin(GL_POLYGON);
+glVertex2f(100, 100); // Vértice inferior izquierdo
+glVertex2f(200, 100); // Vértice inferior derecho
+glVertex2f(200, 200); // Vértice superior derecho
+glVertex2f(100, 200); // Vértice superior izquierdo
+glEnd();

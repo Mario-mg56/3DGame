@@ -5,6 +5,7 @@ Se dibuja especificando los vértices con glVertex2f(x, y)
 
 GL_TRIANGLES → triángulos
 GL_LINES → líneas
+GL_POINTS → puntos
 GL_QUADS → cuadrados
 GL_POLYGON → polígonos de más lados
 

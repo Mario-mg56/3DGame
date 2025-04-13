@@ -10,7 +10,7 @@ import static org.lwjgl.system.MemoryUtil.*;
 public class GfxTest {
     public long window;
 
-    public void run() {
+    public void start() {
         init();
         loop();
 
@@ -28,7 +28,7 @@ public class GfxTest {
             throw new IllegalStateException("No se pudo inicializar GLFW");
 
         //Crea una ventana de las dimensiones y título especificados
-        window = glfwCreateWindow(800, 600, "Tittle", NULL, NULL);
+        window = glfwCreateWindow(800, 600, "Title", NULL, NULL);
 
         if (window == NULL)
             throw new RuntimeException("No se pudo crear la ventana");
@@ -66,6 +66,6 @@ public class GfxTest {
     }
 
     public static void main(String[] args) {
-        new GfxTest().run();
+        new GfxTest().start();
     }
 }

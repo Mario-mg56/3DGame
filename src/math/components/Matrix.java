@@ -64,7 +64,7 @@ public class Matrix {
     public Matrix rotar(double angulo_X,double angulo_Y,double angulo_Z){
         RotationMatrix matriz_rotacion = new RotationMatrix(Math.toRadians(angulo_X) ,Math.toRadians(angulo_Y),Math.toRadians(angulo_Z));
 
-        UtilMatrix.multiplicarMatrices(matriz_rotacion,this);
+        UtilMatrix.multiplicarMatrices(UtilMatrix.getRotationMatrix(Math.toRadians(angulo_X), Math.toRadians(angulo_Y), Math.toRadians(angulo_Z)),this);
         return this;
     }
 }

@@ -19,6 +19,20 @@ public class UtilMatrix {
 //    matriz_C[i][j] += matriz_A[i][k] * matriz_B[k][j]
 //            return Matrix(len(matriz_C),len(matriz_C[0]),matriz_C)
 
+
+    public static Matrix getRotationMatrix(double ang_x, double ang_y, double ang_z){
+        double sin_x = Math.sin(ang_x), cos_x  = Math.cos(ang_x);
+        double sin_y = Math.sin(ang_y), cos_y  = Math.cos(ang_y);
+        double sin_z = Math.sin(ang_z), cos_z  = Math.cos(ang_z);
+        //Rota en YXZ
+        double[] datos = {
+                cos_y * cos_z, -sin_z * cos_y, sin_y,
+                cos_x * sin_z + sin_x * sin_y * cos_z, cos_x * cos_z - sin_x * sin_y * sin_z, -sin_x * cos_y,
+                sin_x * sin_z - cos_x * sin_y * cos_z, sin_x * cos_z + cos_x * sin_y * sin_z, cos_x * cos_y
+        };
+        return new Matrix(3,3,datos);
+    }
+
     public static Matrix multiplicarMatrices(Matrix ma, Matrix mb) {
         int filas_ma = ma.getData().length;
         int cols_ma = ma.getData()[0].length;

@@ -1,5 +1,7 @@
 import math, pygame as pg
 
+
+
 class Point:
     def __init__(self, x, y, z, name=None):
         self.x = x

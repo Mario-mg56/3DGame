@@ -33,6 +33,6 @@ public class UtilMatrix {
             }
         }
 
-        return Matrix(mc.length, mc[0].length, mc);
+        return new Matrix(mc);
     }
 }

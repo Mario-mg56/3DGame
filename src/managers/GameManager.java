@@ -18,7 +18,7 @@ public class GameManager {
     public ArrayList<Object> objs;
     private GameManager() {
         this.inputManager = new InputManager();
-        this.cam = new Cam();
+        this.cam = new Cam(400);
         this.renderer = new Renderer(800, 600);
         this.player = new Player();
         this.info2d = new ArrayList<>();

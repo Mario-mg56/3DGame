@@ -105,7 +105,6 @@ class Cam:
             self.puntoDeLaCamara.rotar(angulo_y=math.degrees(ang_nor))
             
         self.actualizar_plano()
-              
     
     def listenRotationCamera(self, input):
         print(input)

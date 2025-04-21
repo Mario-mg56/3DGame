@@ -12,7 +12,7 @@ public enum Color {
     GRIS(128f, 128f, 128f),
     NARANJA(255f, 165f, 0f);
 
-    public float r, g, b;
+    public final float r, g, b;
 
     Color(float r, float g, float b) {
         this.r = r;

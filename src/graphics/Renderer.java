@@ -9,7 +9,7 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
 public class Renderer {
-    public long window;
+    private long window;
 
     public Renderer(int width, int height) {
         GLFWErrorCallback.createPrint(System.err).set(); //Imprime los errores que puedan ocurrir al usar GLFW
@@ -55,4 +55,6 @@ public class Renderer {
     public void draw(){
 
     }
+
+    public long getWindow() {return window;}
 }

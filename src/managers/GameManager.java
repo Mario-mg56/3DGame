@@ -16,10 +16,13 @@ public class GameManager {
     public ArrayList<Point2> info2d;
     public ArrayList<Point> info3d;
     public ArrayList<Object> objs;
+    public int width, height;
     private GameManager() {
+        this.width = 800;
+        this.height = 600;
         this.inputManager = new InputManager();
         this.cam = new Cam();
-        this.renderer = new Renderer(800, 600);
+        this.renderer = new Renderer(width, height);
         this.player = new Player();
         this.info2d = new ArrayList<>();
         this.info3d = new ArrayList<>();

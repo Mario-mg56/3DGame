@@ -3,10 +3,22 @@ package math.util;
 import math.components.*;
 
 public class UtilVector {
+
+    /**
+     * @param pf punto final del vector creado
+     * @param p0 punto origen del vector creado
+     * @return esta funcion devuelve un Vector creado por los dos puntos
+     *
+     * **/
     public static Vector createVector(Point pf, Point p0) {
         return new Vector(pf.x - p0.x, pf.y - p0.y, pf.z - p0.z);
     }
 
+    /**
+     * @param v1 primer termino del producto escalar
+     * @param v2 segundo termino del producto escalar
+     * @return devuelve el producto escalar entre v1 y v2
+     * **/
     public static Double scalarProduct(Vector v1, Vector v2) {
         return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);
     }

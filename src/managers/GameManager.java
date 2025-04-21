@@ -34,7 +34,7 @@ public class GameManager {
     }
 
     public void play(){
-        //Tengo que crear los managers fuera del constructor porque los managers llaman al gm creando un bucle
+        //Managers fuera del constructor porque los managers llaman al gm en su constructor creando un bucle infinito
         this.cam = new Cam(400);
         this.renderer = new Renderer(width, height);
         this.inputManager = new InputManager();
@@ -46,5 +46,9 @@ public class GameManager {
             inputManager.update();
         }
         renderer.clean();
+    }
+
+    public void setObjs(){
+
     }
 }

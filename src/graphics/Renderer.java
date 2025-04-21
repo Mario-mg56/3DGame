@@ -11,8 +11,11 @@ import static org.lwjgl.system.MemoryUtil.*;
 
 public class Renderer {
     private long window;
+    GameManager gm;
 
     public Renderer(int width, int height) {
+        GameManager gm = GameManager.getInstance();
+
         GLFWErrorCallback.createPrint(System.err).set(); //Imprime los errores que puedan ocurrir al usar GLFW *1
 
         if (!glfwInit()) //Inicializa la librería
@@ -41,7 +44,10 @@ public class Renderer {
     }
 
     private void draw(){
-        Draw.drawPoint(new Point2(0, 0), Color.BLUE);
+        for (Point2 p : gm.info2d) {
+            Draw.drawPoint(p, Color.BLUE);
+        }
+
     }
 
     public void clean() { //Libera los recursos

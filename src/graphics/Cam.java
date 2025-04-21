@@ -10,21 +10,23 @@ import math.util.Utilities;
 public class Cam {
     double fov, rotSpeed;
     Point puntoDeLaCamara, position;
+    GameManager gm;
     private Vector vectorNormal, vector_a_la_camara, vector_X_local, vector_Y_local;
     private Plane plano_camara;
     public Cam(int field_of_view){
         this.fov = field_of_view;
         this.rotSpeed = 2;
+        this.gm = GameManager.getInstance();
     }
 
     public void update(){
-        this.position = GameManager.getInstance().player.position;
+        this.position = gm.player.position;
         this.puntoDeLaCamara = new Point(position.x+fov, position.y, position.z);
         info3Dto2D();
     }
 
     public void rotarCamara(float horizontal, float vertical){
-        this.position = GameManager.getInstance().player.position;
+        this.position = gm.player.position;
         this.puntoDeLaCamara = new Point(position.x+fov, position.y, position.z);
 
         Point puntoCamaraCentrado = this.puntoDeLaCamara.subtract(this.position);
@@ -41,7 +43,7 @@ public class Cam {
     }
 
     private void actualizar_plano(){
-        this.position = GameManager.getInstance().player.position;
+        this.position = gm.player.position;
         vectorNormal = UtilVector.createVector(puntoDeLaCamara,position);
         plano_camara = new Plane(puntoDeLaCamara,vectorNormal);
         vector_a_la_camara = UtilVector.createVector(puntoDeLaCamara,position);
@@ -50,10 +52,11 @@ public class Cam {
     }
 
     private void info3Dto2D(){
-        for (Point i : GameManager.getInstance().info3d){
+        gm.info2d.clear();
+        for (Point i : gm.info3d){
             Point2 p = watch(i);
             if (p != null){
-                GameManager.getInstance().info2d.add(p);
+                gm.info2d.add(p);
             }
         }
     }

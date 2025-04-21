@@ -38,9 +38,9 @@ public class InputManager {
         GLFW.glfwSetMouseButtonCallback(window, (windowHandle, button, action, mods) -> {
             if (action == GLFW.GLFW_PRESS) {
                 if (button == GLFW.GLFW_MOUSE_BUTTON_LEFT) {
-                    System.out.println("Click izquierdo");
+                    //Click izq
                 } else if (button == GLFW.GLFW_MOUSE_BUTTON_RIGHT) {
-                    System.out.println("Click derecho");
+                    //Click dcho
                 }
             }
         });
@@ -62,17 +62,22 @@ public class InputManager {
     public void checkCamInputs() {
         //Comparo la posición anterior con la actual para averiguar a donde se ha movido la cámara
         Point2 mousePosition = getMousePosition(); //Posición actual del ratón
-        if (mousePreviousPosition != mousePosition) {
-            if (mousePosition.y > mousePreviousPosition.x) {
+        if (mousePosition == null || mousePreviousPosition == null) { //Si el ratón se sale de la pantalla
+            mousePosition = getMousePosition();
+            mousePreviousPosition = mousePosition;
+            return;
+        }
+        if (mousePosition != mousePreviousPosition) {
+            if (mousePosition.y > mousePreviousPosition.y) {
                 //Camara up
             }
-            else if (mousePosition.y < mousePreviousPosition.x) {
+            else if (mousePosition.y < mousePreviousPosition.y) {
                 //Camara down
             }
-            if (mousePosition.x > mousePreviousPosition.y) {
+            if (mousePosition.x > mousePreviousPosition.x) {
                 //Camara right
             }
-            else if (mousePosition.x < mousePreviousPosition.y) {
+            else if (mousePosition.x < mousePreviousPosition.x) {
                 //Camara left
             }
         }

@@ -13,43 +13,47 @@ public class Draw {
     }
 
     public static void drawPoint(Point2 point, Color color) {
+        glPointSize(5);
         glColor3f(color.r, color.g, color.b);
         glBegin(GL_POINTS);
-        glVertex2f(point.x, point.y);
+            glVertex2f(point.x, point.y);
         glEnd();
     }
     public static void drawPoint(Point2 point, Float[] rgb) {
+        glPointSize(5);
         glColor3f(rgb[0], rgb[1], rgb[2]);
         glBegin(GL_POINTS);
-        glVertex2f(point.x, point.y);
+            glVertex2f(point.x, point.y);
         glEnd();
     }
 
     public static void drawLine(Point2 start, Point2 end, Color color) {
+        glLineWidth(5);
         glColor3f(color.r, color.g, color.b);
         glBegin(GL_LINES);
-        glVertex2f(start.x, start.y);
-        glVertex2f(end.x, end.y);
+            glVertex2f(start.x, start.y);
+            glVertex2f(end.x, end.y);
         glEnd();
     }
     public static void drawLine(Point2 start, Point2 end, Float[] rgb) {
+        glLineWidth(5);
         glColor3f(rgb[0], rgb[1], rgb[2]);
         glBegin(GL_LINES);
-        glVertex2f(start.x, start.y);
-        glVertex2f(end.x, end.y);
+            glVertex2f(start.x, start.y);
+            glVertex2f(end.x, end.y);
         glEnd();
     }
 
     public static void drawPoly(ArrayList<Point2> points, Color color) {
         glColor3f(color.r, color.g, color.b);
         glBegin(GL_POLYGON);
-        for (Point2 p : points) {glVertex2f(p.x, p.y);}
+            for (Point2 p : points) {glVertex2f(p.x, p.y);}
         glEnd();
     }
     public static void drawPoly(ArrayList<Point2> points, Float[] rgb) {
         glColor3f(rgb[0], rgb[1], rgb[2]);
         glBegin(GL_POLYGON);
-        for (Point2 p : points) {glVertex2f(p.x, p.y);}
+            for (Point2 p : points) {glVertex2f(p.x, p.y);}
         glEnd();
     }
 }

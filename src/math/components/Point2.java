@@ -19,5 +19,13 @@ public class Point2 {
         return new Point2(this.x - point.x, this.y - point.y, point.name);
     }
 
-    @Override public String toString() {return name + "x:" + x + " y:" + y;}
+    @Override public String toString() {return "Nombre: " + name + "x:" + x + " y:" + y;}
+
+    @Override public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj instanceof Point2) {
+            return ((Point2) obj).x == this.x && ((Point2) obj).y == this.y;
+        }
+        return false;
+    }
 }

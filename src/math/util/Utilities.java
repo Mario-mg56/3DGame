@@ -10,16 +10,16 @@ public class Utilities {
         double absTol = 0.0;
         return Math.abs(a - b) <= Math.max(relTol * Math.max(Math.abs(a), Math.abs(b)), absTol);
     }
-    
+
     public static Point2 fixCoords(Point2 p) {
         //Cambiar el sistema de coordenadas de arriba a la izquierda a el centro de la pantalla
         GameManager gm = GameManager.getInstance();
-        if ((Math.abs(p.x) > ((float) gm.width /2)) || (Math.abs(p.y) > ((float) gm.height /2))) {
-            return null; //Si el punto se sale de la pantalla
-        }
-        return new Point2(p.x + ((float) gm.width /2), ((-1)*p.y)+((float) gm.height /2));
+        p = new Point2(p.x - ((float) gm.width /2), p.y-((float) gm.height /2));
+        //Si el punto se sale de la pantalla
+        if ((Math.abs(p.x) > ((float) gm.width /2)) || (Math.abs(p.y) > ((float) gm.height /2))) {return null;}
+        return p;
     }
-    
+
     public static Point interseccion_recta_plano(Rect recta, Plane plano){
         Vector v = recta.vDir;
         double x = recta.x;

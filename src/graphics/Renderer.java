@@ -1,6 +1,7 @@
 package graphics;
 
-import math.components.Point;
+import managers.GameManager;
+import math.components.Point2;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 import static org.lwjgl.glfw.Callbacks.*;
@@ -12,7 +13,7 @@ public class Renderer {
     private long window;
 
     public Renderer(int width, int height) {
-        GLFWErrorCallback.createPrint(System.err).set(); //Imprime los errores que puedan ocurrir al usar GLFW
+        GLFWErrorCallback.createPrint(System.err).set(); //Imprime los errores que puedan ocurrir al usar GLFW *1
 
         if (!glfwInit()) //Inicializa la librería
             throw new IllegalStateException("No se pudo inicializar GLFW");
@@ -27,33 +28,31 @@ public class Renderer {
         glfwSwapInterval(1); // VSync
         glfwShowWindow(window);
         GL.createCapabilities(); // Habilita OpenGL
-    }
 
-    public void start() {
-        loop();
-        // Limpieza
-        glfwFreeCallbacks(window);
-        glfwDestroyWindow(window);
-        glfwTerminate();
-        glfwSetErrorCallback(null).free();
-    }
-
-    private void loop() {
         //glOrtho(0, 800, 600, 0, -1, 1); //Posiciona (0, 0) en la esquina superior izquierda
         glOrtho(-400, 400, -300, 300, -1, 1); //Posiciona (0, 0) en el centro de la ventana
-
-        while (!glfwWindowShouldClose(window)) {
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-            draw();
-
-            glfwSwapBuffers(window);
-            glfwPollEvents();
-        }
     }
 
-    public void draw(){
+    public void update() {
+            Draw.fill(Color.BLACK);
+            draw();
+            glfwSwapBuffers(window); //Mostrar frame
+            glfwPollEvents(); //Procesar eventos
+    }
 
+    private void draw(){
+        Draw.drawPoint(new Point2(0, 0), Color.BLUE);
+    }
+
+    public void clean() { //Libera los recursos
+        // Libera todos los callbacks asociados a esa ventana (teclado, mouse, scroll, etc.)
+        glfwFreeCallbacks(window);
+        // Destruye la ventana GLFW (la borra de la pantalla y libera su memoria)
+        glfwDestroyWindow(window);
+        // Libera todo lo que GLFW haya reservado a nivel global
+        glfwTerminate();
+        //Libera la memoria del callback *1
+        glfwSetErrorCallback(null).free();
     }
 
     public long getWindow() {return window;}

@@ -7,6 +7,8 @@ import objects.Object;
 import objects.entities.*;
 import graphics.*;
 
+import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
+
 public class GameManager {
     private static GameManager instance;
     public InputManager inputManager;
@@ -20,20 +22,29 @@ public class GameManager {
     private GameManager() {
         this.width = 800;
         this.height = 600;
-        this.inputManager = new InputManager();
-        this.cam = new Cam(400);
-        this.renderer = new Renderer(width, height);
         this.player = new Player();
         this.info2d = new ArrayList<>();
         this.info3d = new ArrayList<>();
         this.objs = new ArrayList<>();
     }
+
     public static GameManager getInstance() {
         if (instance == null) {instance = new GameManager();}
         return instance;
     }
-    public void update(){
 
+    public void play(){
+        //Tengo que crear los managers fuera del constructor porque los managers llaman al gm creando un bucle
+        this.cam = new Cam(400);
+        this.renderer = new Renderer(width, height);
+        this.inputManager = new InputManager();
+
+        //glfwWindowShouldClose devuelve true si se cierra la ventana
+        while (!glfwWindowShouldClose(renderer.getWindow())) { //Game loop
+            cam.update();
+            renderer.update();
+            inputManager.update();
+        }
+        renderer.clean();
     }
-
 }

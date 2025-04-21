@@ -11,6 +11,14 @@ public class Vector {
 
     @Override public String toString() {return "x:" + x + " y:" + y + " z:" + z;}
 
+    @Override public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj instanceof Vector) {
+            return ((Vector) obj).x == this.x && ((Vector) obj).y == this.y && ((Vector) obj).z == this.z;
+        }
+        return false;
+    }
+
     public Vector add(Vector vector) {
         return new Vector(this.x + vector.x, this.y + vector.y, this.z + vector.z);
     }

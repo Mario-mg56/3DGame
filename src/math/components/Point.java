@@ -22,9 +22,16 @@ public class Point {
         return new Point(this.x - punto.x, this.y - punto.y, this.z - punto.z);
     }
 
-    @Override
-    public String toString() {
+    @Override public String toString() {
         return "x:" + x + " y:" + y + " z:" + z;
+    }
+
+    @Override public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj instanceof Point) {
+            return ((Point) obj).x == this.x && ((Point) obj).y == this.y && ((Point) obj).z == this.z;
+        }
+        return false;
     }
 
     public Matrix toMatrix() {

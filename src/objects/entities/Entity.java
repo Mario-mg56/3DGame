@@ -4,5 +4,10 @@ import math.components.*;
 
 public class Entity {
     public Point position;
-    public Entity() {}
+    public Entity() {
+        this.position = new Point(0, 0, 0);
+    }
+    public Entity(Point position) {
+        this.position = position;
+    }
 }

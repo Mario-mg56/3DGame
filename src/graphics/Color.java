@@ -1,16 +1,16 @@
 package graphics;
 
 public enum Color {
-    ROJO(255f, 0f, 0f),
-    VERDE(0f, 255f, 0f),
-    AZUL(0f, 0f, 255f),
-    NEGRO(0f, 0f, 0f),
-    BLANCO(255f, 255f, 255f),
-    AMARILLO(255f, 255f, 0f),
-    CIAN(0f, 255f, 255f),
+    RED(255f, 0f, 0f),
+    GREEN(0f, 255f, 0f),
+    BLUE(0f, 0f, 255f),
+    BLACK(0f, 0f, 0f),
+    WHITE(255f, 255f, 255f),
+    YELLOW(255f, 255f, 0f),
+    CYAN(0f, 255f, 255f),
     MAGENTA(255f, 0f, 255f),
-    GRIS(128f, 128f, 128f),
-    NARANJA(255f, 165f, 0f);
+    GREY(128f, 128f, 128f),
+    ORANGE(255f, 165f, 0f);
 
     public final float r, g, b;
 

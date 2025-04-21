@@ -3,6 +3,8 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+__pycache__/
+
 ### IntelliJ IDEA ###
 .idea/
 .idea/modules.xml

@@ -1,9 +1,7 @@
 package graphics;
 
-import jdk.jshell.execution.Util;
 import managers.GameManager;
 import math.components.*;
-import math.util.UtilRect;
 import math.util.UtilVector;
 import math.util.Utilities;
 

@@ -1,7 +1,7 @@
 package math.components;
 
 public class Plane {
-    double A, B, C, D;
+    public double A, B, C, D;
     Point p;
     Vector vn;
     public Plane(Point p, Vector vn) { //Plano a partir de un punto y un vector normal al plano

@@ -21,7 +21,7 @@ public class GameManager {
         this.width = 800;
         this.height = 600;
         this.inputManager = new InputManager();
-        this.cam = new Cam();
+        this.cam = new Cam(400);
         this.renderer = new Renderer(width, height);
         this.player = new Player();
         this.info2d = new ArrayList<>();

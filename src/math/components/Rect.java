@@ -2,9 +2,11 @@ package math.components;
 
 import math.util.UtilVector;
 
+import java.util.ArrayList;
+
 public class Rect {
-    Double x, y, z;
-    Vector vDir;
+    public Double x, y, z;
+    public Vector vDir;
     public Rect(Point p, Vector vd){ //Recta a partir de un punto y un vector
         //Ec paramétrica: (x = x1 + vDir.x*t), (y = y1 + vDir.y*t), (z = z1 + vDir.z*t)
         this.vDir = vd;
@@ -29,8 +31,45 @@ public class Rect {
         return new Rect(getPoint(), this.vDir.rotar(ang_x, ang_y, ang_z));
     }
 
-    public double getT(){
-        return 0;
+    public Double getT(Point punto) {
+        Double t1 = null, t2 = null, t3 = null;
+
+        if (this.vDir.x != 0) {
+            t1 = Math.round((punto.x - this.x) / this.vDir.x * 1000.0) / 1000.0;
+        } else if (this.x != punto.x) {
+            return null;
+        }
+
+        if (this.vDir.y != 0) {
+            t2 = Math.round((punto.y - this.y) / this.vDir.y * 1000.0) / 1000.0;
+        } else if (this.y != punto.y) {
+            return null;
+        }
+
+        if (this.vDir.z != 0) {
+            t3 = Math.round((punto.z - this.z) / this.vDir.z * 1000.0) / 1000.0;
+        } else if (this.z != punto.z) {
+            return null;
+        }
+
+        ArrayList<Double> tArray = new ArrayList<>();
+        if (t1 != null) tArray.add(t1);
+        if (t2 != null) tArray.add(t2);
+        if (t3 != null) tArray.add(t3);
+
+        if (tArray.isEmpty()) {
+            boolean todosIguales = true;
+            Double ref = tArray.get(0);
+            for (Double val : tArray) {
+                if (!val.equals(ref)) {
+                    todosIguales = false;
+                    break;
+                }
+            }
+            if (todosIguales) return ref;
+        }
+
+        return null;
     }
 
 //    def getT(self, punto: Point):

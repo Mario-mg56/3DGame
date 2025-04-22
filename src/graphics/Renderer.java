@@ -14,7 +14,7 @@ public class Renderer {
     GameManager gm;
 
     public Renderer(int width, int height) {
-        GameManager gm = GameManager.getInstance();
+        this.gm = GameManager.getInstance();
 
         GLFWErrorCallback.createPrint(System.err).set(); //Imprime los errores que puedan ocurrir al usar GLFW *1
 

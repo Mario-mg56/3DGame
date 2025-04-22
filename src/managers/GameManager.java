@@ -3,6 +3,7 @@ package managers;
 import java.util.ArrayList;
 
 import math.components.*;
+import objects.Cube;
 import objects.Object;
 import objects.entities.*;
 import graphics.*;
@@ -39,6 +40,7 @@ public class GameManager {
         this.renderer = new Renderer(width, height);
         this.inputManager = new InputManager();
 
+        setObjs();
         //glfwWindowShouldClose devuelve true si se cierra la ventana
         while (!glfwWindowShouldClose(renderer.getWindow())) { //Game loop
             cam.update();
@@ -49,6 +51,6 @@ public class GameManager {
     }
 
     public void setObjs(){
-
+        info3d.addAll(new Cube(500, 0, 0, 100).getPoints());
     }
 }

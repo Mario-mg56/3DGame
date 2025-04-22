@@ -8,8 +8,7 @@ import objects.*;
 
 public class Main2 {
     public static void main(String[] args) {
-        for (Point p : new Cube(500,0,0,100).getPoints()) {
-            System.out.println(p);
-        }
+        GameManager gm = GameManager.getInstance();
+        gm.play();
     }
 }

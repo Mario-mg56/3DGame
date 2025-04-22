@@ -15,6 +15,9 @@ public class Cam {
         this.fov = field_of_view;
         this.rotSpeed = 2;
         this.gm = GameManager.getInstance();
+        this.position = gm.player.position;
+        this.puntoDeLaCamara = new Point(position.x+fov, position.y, position.z);
+        actualizar_plano();
     }
 
     public void update(){
@@ -42,11 +45,11 @@ public class Cam {
 
     private void actualizar_plano(){
         this.position = gm.player.position;
-        vectorNormal = UtilVector.createVector(puntoDeLaCamara,position);
-        plano_camara = new Plane(puntoDeLaCamara,vectorNormal);
-        vector_a_la_camara = UtilVector.createVector(puntoDeLaCamara,position);
-        vector_X_local = UtilVector.producto_vectorial(vector_a_la_camara,UtilVector.getDown());
-        vector_Y_local = UtilVector.producto_vectorial(vector_a_la_camara,vector_X_local);
+        vectorNormal = UtilVector.createVector(puntoDeLaCamara, position);
+        plano_camara = new Plane(puntoDeLaCamara, vectorNormal);
+        vector_a_la_camara = UtilVector.createVector(puntoDeLaCamara, position);
+        vector_X_local = UtilVector.producto_vectorial(vector_a_la_camara, UtilVector.getDown());
+        vector_Y_local = UtilVector.producto_vectorial(vector_a_la_camara, vector_X_local);
     }
 
     private void info3Dto2D(){

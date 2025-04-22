@@ -7,13 +7,13 @@ import math.util.Utilities;
 
 public class Cam {
     double fov, rotSpeed;
-    Point puntoDeLaCamara, position;
+    public Point puntoDeLaCamara, position;
     GameManager gm;
-    private Vector vectorNormal, vector_a_la_camara, vector_X_local, vector_Y_local;
+    public Vector vectorNormal, vector_a_la_camara, vector_X_local, vector_Y_local;
     private Plane plano_camara;
     public Cam(int field_of_view){
         this.fov = field_of_view;
-        this.rotSpeed = 2;
+        this.rotSpeed = 1;
         this.gm = GameManager.getInstance();
         this.position = gm.player.position;
         this.puntoDeLaCamara = new Point(position.x+fov, position.y, position.z);
@@ -21,26 +21,27 @@ public class Cam {
     }
 
     public void update(){
+        actualizar_plano();
         this.position = gm.player.position;
-        this.puntoDeLaCamara = new Point(position.x+fov, position.y, position.z);
+        //this.puntoDeLaCamara = new Point(position.x+fov, position.y, position.z);
         info3Dto2D();
     }
 
     public void rotarCamara(float horizontal, float vertical){
-        this.position = gm.player.position;
-        this.puntoDeLaCamara = new Point(position.x+fov, position.y, position.z);
+        //this.position = gm.player.position;
+        //this.puntoDeLaCamara = new Point(position.x+fov, position.y, position.z);
 
-        Point puntoCamaraCentrado = this.puntoDeLaCamara.subtract(this.position);
+        Point puntoCamaraCentrado = this.puntoDeLaCamara.subtract(position);
         if (horizontal != 0){
             puntoCamaraCentrado.rotar(0,horizontal,0);
+
         }
         if (vertical != 0){
             puntoCamaraCentrado.rotateVertically(vertical);
         }
-        this.puntoDeLaCamara = puntoCamaraCentrado.add(this.position);
+        this.puntoDeLaCamara = puntoCamaraCentrado.add(position);
         vector_X_local.normalize();
-        actualizar_plano();
-
+        this.actualizar_plano();
     }
 
     private void actualizar_plano(){
@@ -50,6 +51,7 @@ public class Cam {
         vector_a_la_camara = UtilVector.createVector(puntoDeLaCamara, position);
         vector_X_local = UtilVector.producto_vectorial(vector_a_la_camara, UtilVector.getDown());
         vector_Y_local = UtilVector.producto_vectorial(vector_a_la_camara, vector_X_local);
+
     }
 
     private void info3Dto2D(){

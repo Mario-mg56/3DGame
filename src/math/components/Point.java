@@ -17,9 +17,15 @@ public class Point {
     public Point add(Point punto) {
         return new Point(this.x + punto.x, this.y + punto.y, this.z + punto.z);
     }
+    public Point add(Vector vector) {
+        return new Point(this.x + vector.x, this.y + vector.y, this.z + vector.z);
+    }
 
     public Point subtract(Point punto) {
         return new Point(this.x - punto.x, this.y - punto.y, this.z - punto.z);
+    }
+    public Point subtract(Vector vector) {
+        return new Point(this.x - vector.x, this.y - vector.y, this.z - vector.z);
     }
 
     @Override public String toString() {
@@ -44,6 +50,7 @@ public class Point {
 
     public Point rotar(double anguloX, double anguloY, double anguloZ) {
         Point p = this.toMatrix().rotar(anguloX, anguloY, anguloZ).toPoint();
+
         this.x = p.x;
         this.y = p.y;
         this.z = p.z;

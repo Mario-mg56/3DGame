@@ -38,7 +38,7 @@ public class UtilMatrix {
         int cols_ma = ma.getData()[0].length;
         int cols_mb = mb.getData()[0].length;
 
-        double[][] mc = new double[cols_mb][filas_ma];
+        double[][] mc = new double[filas_ma][cols_mb];
         for (int i = 0; i < filas_ma; i++) {
             for (int j = 0; j < cols_mb; j++) {
                 for (int k = 0; k < cols_ma; k++) {
@@ -46,7 +46,6 @@ public class UtilMatrix {
                 }
             }
         }
-
         return new Matrix(mc);
     }
 }

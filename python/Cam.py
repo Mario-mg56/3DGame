@@ -107,7 +107,6 @@ class Cam:
         self.actualizar_plano()
     
     def listenRotationCamera(self, input):
-        print(input)
         if input == None:
             return
         elif input == Input.UP:

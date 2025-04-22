@@ -1,7 +1,10 @@
 package managers;
 
+import math.components.Point;
 import math.components.Point2;
 import static math.util.Utilities.fixCoords;
+
+import math.components.Vector;
 import org.lwjgl.glfw.GLFW;
 
 public class InputManager {
@@ -19,9 +22,15 @@ public class InputManager {
         GLFW.glfwSetKeyCallback(window, (windowHandle, key, scancode, action, mods) -> {
             //Listener teclas presionadas
             if (action == GLFW.GLFW_PRESS){
+                if (key == GLFW.GLFW_KEY_W || key == GLFW.GLFW_KEY_A || key == GLFW.GLFW_KEY_S || key == GLFW.GLFW_KEY_D) {
+                    Vector camVector = gm.cam.vector_a_la_camara.normalize();
+                    camVector.y = 0;
+                    camVector = camVector.multiply(2);
+                }
                 switch (key){
                     case GLFW.GLFW_KEY_W:
-                        break;
+                        gm.player.position = gm.player.position.add(camVector) ;
+                        gm.cam.vector_a_la_camara.add(camVector);
                     case GLFW.GLFW_KEY_A:
                         break;
                     case GLFW.GLFW_KEY_S:
@@ -72,21 +81,25 @@ public class InputManager {
         }
         if (mousePosition != mousePreviousPosition) {
             float rotSpeed = (float)gm.cam.getRotSpeed();
-            if (mousePosition.y > mousePreviousPosition.y) {
+            float dify= mousePosition.y - mousePreviousPosition.y;
+            float difx= mousePosition.x - mousePreviousPosition.x;
+            if (dify > 0) {
                 //Camara up
+                //*dify/3
                 gm.cam.rotarCamara(0,rotSpeed);
             }
-            else if (mousePosition.y < mousePreviousPosition.y) {
+            else if (dify < 0) {
                 //Camara down
                 gm.cam.rotarCamara(0,-1*rotSpeed);
             }
-            if (mousePosition.x > mousePreviousPosition.x) {
+
+            if (difx > 0) {
                 //Camara right
-                gm.cam.rotarCamara(rotSpeed,0);
-            }
-            else if (mousePosition.x < mousePreviousPosition.x) {
-                //Camara left
                 gm.cam.rotarCamara(-1*rotSpeed,0);
+            }
+            else if (difx < 0) {
+                //Camara left
+                gm.cam.rotarCamara(rotSpeed,0);
             }
         }
         this.mousePreviousPosition = getMousePosition();

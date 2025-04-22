@@ -51,13 +51,12 @@ public class Rect {
         } else if (this.z != punto.z) {
             return null;
         }
-
         ArrayList<Double> tArray = new ArrayList<>();
         if (t1 != null) tArray.add(t1);
         if (t2 != null) tArray.add(t2);
         if (t3 != null) tArray.add(t3);
 
-        if (tArray.isEmpty()) {
+        if (!tArray.isEmpty()) {
             boolean todosIguales = true;
             Double ref = tArray.get(0);
             for (Double val : tArray) {

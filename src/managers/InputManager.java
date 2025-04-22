@@ -6,9 +6,12 @@ import org.lwjgl.glfw.GLFW;
 
 public class InputManager {
     Point2 mousePreviousPosition;
+    private GameManager gm;
     public InputManager() {
         this.mousePreviousPosition = getMousePosition();
         setUpListeners();
+        gm = GameManager.getInstance();
+
     }
 
     private void setUpListeners(){
@@ -68,17 +71,22 @@ public class InputManager {
             return;
         }
         if (mousePosition != mousePreviousPosition) {
+            float rotSpeed = (float)gm.cam.getRotSpeed();
             if (mousePosition.y > mousePreviousPosition.y) {
                 //Camara up
+                gm.cam.rotarCamara(0,rotSpeed);
             }
             else if (mousePosition.y < mousePreviousPosition.y) {
                 //Camara down
+                gm.cam.rotarCamara(0,-1*rotSpeed);
             }
             if (mousePosition.x > mousePreviousPosition.x) {
                 //Camara right
+                gm.cam.rotarCamara(rotSpeed,0);
             }
             else if (mousePosition.x < mousePreviousPosition.x) {
                 //Camara left
+                gm.cam.rotarCamara(-1*rotSpeed,0);
             }
         }
         this.mousePreviousPosition = getMousePosition();

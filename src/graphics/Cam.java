@@ -68,9 +68,11 @@ public class Cam {
         if (cutPoint == null){
             return null;
         }
-        if (!(ray.getT(cutPoint) <= 0 && ray.getT(cutPoint) >= ray.getT(point))) {
+        double cutT = ray.getT(cutPoint);
+        if (!(cutT > 0 && cutT<ray.getT(point))) {
             return null;
         }
+
         Vector vectorAlPunto = UtilVector.createVector(cutPoint, puntoDeLaCamara);
         double distancia = vectorAlPunto.getMod();
 
@@ -81,6 +83,10 @@ public class Cam {
         double x_local = distancia*Math.cos(angulo);
         double y_local = distancia*Math.sin(angulo)*signy;
         return new Point2((float)x_local, (float) y_local);
+    }
+
+    public double getRotSpeed() {
+        return rotSpeed;
     }
     //falta añadir comentarios de python y funciones
 }

@@ -86,7 +86,6 @@ public class Cam {
         double y_local = distancia*Math.sin(angulo)*signy;
         return new Point2((float)x_local, (float) y_local);
     }
-
     public double getRotSpeed() {
         return rotSpeed;
     }

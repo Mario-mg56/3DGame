@@ -23,7 +23,6 @@ public class GameManager {
     private GameManager() {
         this.width = 800;
         this.height = 600;
-        this.player = new Player();
         this.info2d = new ArrayList<>();
         this.info3d = new ArrayList<>();
         this.objs = new ArrayList<>();
@@ -35,7 +34,8 @@ public class GameManager {
     }
 
     public void play(){
-        //Managers fuera del constructor porque los managers llaman al gm en su constructor creando un bucle infinito
+        //Estas clases llaman al gm en sus constructores por lo que no pueden ser creadas en el contructor del gm
+        this.player = new Player();
         this.cam = new Cam(400);
         this.renderer = new Renderer(width, height);
         this.inputManager = new InputManager();

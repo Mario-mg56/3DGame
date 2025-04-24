@@ -5,6 +5,7 @@ import math.components.Point2;
 import static math.util.Utilities.fixCoords;
 
 import math.components.Vector;
+import objects.entities.Player;
 import org.lwjgl.glfw.GLFW;
 
 public class InputManager {
@@ -12,30 +13,47 @@ public class InputManager {
     private GameManager gm;
     public InputManager() {
         this.mousePreviousPosition = getMousePosition();
-        setUpListeners();
         gm = GameManager.getInstance();
-
+        setUpListeners();
     }
 
     private void setUpListeners(){
         long window = GameManager.getInstance().renderer.getWindow();
+        gm.player.movementVector = gm.cam.vector_a_la_camara.normalize().multiply(gm.player.speedRate);
+        gm.player.movementVector.y = 0;
         GLFW.glfwSetKeyCallback(window, (windowHandle, key, scancode, action, mods) -> {
             //Listener teclas presionadas
+            Vector movementVector = new Vector(gm.player.movementVector.x, gm.player.movementVector.y, gm.player.movementVector.z);
             if (action == GLFW.GLFW_PRESS){
-                if (key == GLFW.GLFW_KEY_W || key == GLFW.GLFW_KEY_A || key == GLFW.GLFW_KEY_S || key == GLFW.GLFW_KEY_D) {
-                    Vector camVector = gm.cam.vector_a_la_camara.normalize();
-                    camVector.y = 0;
-                    camVector = camVector.multiply(2);
-                }
                 switch (key){
                     case GLFW.GLFW_KEY_W:
-                        gm.player.position = gm.player.position.add(camVector) ;
-                        gm.cam.vector_a_la_camara.add(camVector);
+                        System.out.print("Me muevo de " + gm.player.position);
+                        gm.player.position = gm.player.position.add(movementVector);
+                        gm.cam.puntoDeLaCamara.add(movementVector);
+                        System.out.println(" a " + gm.player.position);
+                        break;
                     case GLFW.GLFW_KEY_A:
+                        System.out.print("Me muevo de " + gm.player.position);
+                        //Perpendicular izquierda del vector
+                        movementVector = new Vector(gm.player.movementVector.z*-1, gm.player.movementVector.y, gm.player.movementVector.x);
+                        System.out.println(movementVector);
+                        gm.player.position = gm.player.position.add(movementVector);
+                        gm.cam.puntoDeLaCamara.add(movementVector);
+                        System.out.println(" a " + gm.player.position);
                         break;
                     case GLFW.GLFW_KEY_S:
+                        System.out.print("Me muevo de " + gm.player.position);
+                        gm.player.position = gm.player.position.subtract(movementVector) ;
+                        gm.cam.puntoDeLaCamara.subtract(movementVector);
+                        System.out.println(" a " + gm.player.position);
                         break;
                     case GLFW.GLFW_KEY_D:
+                        System.out.print("Me muevo de " + gm.player.position);
+                        //Perpendicular derecha del vector
+                        movementVector = new Vector(gm.player.movementVector.z, gm.player.movementVector.y, gm.player.movementVector.x*-1);
+                        gm.player.position = gm.player.position.add(movementVector);
+                        gm.cam.puntoDeLaCamara.add(movementVector);
+                        System.out.println(" a " + gm.player.position);
                         break;
                     case GLFW.GLFW_MOUSE_BUTTON_LEFT:
                         break;

@@ -1,6 +1,6 @@
 package math.components;
 
-public class Vector {
+public class Vector implements OperableCartesian<Vector> {
     public double x, y, z;
 
     public Vector(double x, double y, double z) {
@@ -9,31 +9,11 @@ public class Vector {
         this.z = z;
     }
 
-    @Override public String toString() {return "x:" + x + " y:" + y + " z:" + z;}
-
-    @Override public boolean equals(Object obj) {
-        if (obj == null) return false;
-        if (obj instanceof Vector) {
-            return ((Vector) obj).x == this.x && ((Vector) obj).y == this.y && ((Vector) obj).z == this.z;
-        }
-        return false;
+    @Override public String toString() {
+        return this.asString();
     }
 
-    public Vector add(Vector vector) {
-        return new Vector(this.x + vector.x, this.y + vector.y, this.z + vector.z);
-    }
 
-    public Vector subtract(Vector vector) {
-        return new Vector(this.x - vector.x, this.y - vector.y, this.z - vector.z);
-    }
-
-    public Vector multiply(double escalar) {
-        return new Vector(this.x * escalar, this.y * escalar, this.z * escalar);
-    }
-
-    public Matrix toMatrix() {
-        return new Matrix(1, 3, new double[]{x, y, z});
-    }
 
     public double getMod() { // Devuelve el módulo del vector
         return Math.sqrt((x * x) + (y * y) + (z * z));
@@ -67,6 +47,40 @@ public class Vector {
         else {this.y = this.y * seng / sena;}
 
         return this;
+    }
+    @Override
+    public double getX() {
+        return x;
+    }
+
+    @Override
+    public double getY() {
+        return y;
+    }
+
+    @Override
+    public double getZ() {
+        return z;
+    }
+
+    @Override
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    @Override
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    @Override
+    public void setZ(double z) {
+        this.z = z;
+    }
+
+    @Override
+    public Vector create(double x, double y, double z) {
+        return new Vector(x,y,z);
     }
 }
 

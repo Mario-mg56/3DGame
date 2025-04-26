@@ -1,6 +1,6 @@
 package math.components;
 
-public class Point {
+public class Point implements OperableCartesian<Point>{
     public double x, y, z;
     String name;
     public Point(double x, double y, double z, String name) {
@@ -14,34 +14,8 @@ public class Point {
         this(x, y, z, null);
     }
 
-    public Point add(Point punto) {
-        return new Point(this.x + punto.x, this.y + punto.y, this.z + punto.z);
-    }
-    public Point add(Vector vector) {
-        return new Point(this.x + vector.x, this.y + vector.y, this.z + vector.z);
-    }
-
-    public Point subtract(Point punto) {
-        return new Point(this.x - punto.x, this.y - punto.y, this.z - punto.z);
-    }
-    public Point subtract(Vector vector) {
-        return new Point(this.x - vector.x, this.y - vector.y, this.z - vector.z);
-    }
-
     @Override public String toString() {
-        return "x:" + x + " y:" + y + " z:" + z;
-    }
-
-    @Override public boolean equals(Object obj) {
-        if (obj == null) return false;
-        if (obj instanceof Point) {
-            return ((Point) obj).x == this.x && ((Point) obj).y == this.y && ((Point) obj).z == this.z;
-        }
-        return false;
-    }
-
-    public Matrix toMatrix() {
-        return new Matrix(1, 3, new double[]{x, y, z});
+        return this.asString();
     }
 
     public Vector toVector() {
@@ -72,5 +46,40 @@ public class Point {
         else {this.y = this.y * seng / sena;}
 
         return this;
+    }
+
+    @Override
+    public double getX() {
+        return x;
+    }
+
+    @Override
+    public double getY() {
+        return y;
+    }
+
+    @Override
+    public double getZ() {
+        return z;
+    }
+
+    @Override
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    @Override
+    public void setY(double y) {
+        this.y = y;
+    }
+
+    @Override
+    public void setZ(double z) {
+        this.z = z;
+    }
+
+    @Override
+    public Point create(double x, double y, double z) {
+        return new Point(x,y,z);
     }
 }

@@ -17,7 +17,7 @@ public class UtilVector {
     /**
      * @param v1 primer termino del producto escalar
      * @param v2 segundo termino del producto escalar
-     * @return devuelve el producto escalar entre v1 y v2
+     * @return devuelve el producto escalar entre v1 y v2 pull origin main
      * **/
     public static Double scalarProduct(Vector v1, Vector v2) {
         return (v1.x * v2.x + v1.y * v2.y + v1.z * v2.z);

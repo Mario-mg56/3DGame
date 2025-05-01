@@ -13,18 +13,21 @@ public class ObjectD {
 
     ArrayList<Point> almacenPuntos;
     ArrayList<Face> almacenCaras;
+    ArrayList<ObjectD> almacenOjectosInferiores;
     //cambiar por la clase real de las texturas
     //nota de momento se emparejan 1:1 con el almacen de triangulos por lo tanto
     Vector vectorEscalado = new Vector(1,1,1);
     Point centro;
-    public ObjectD(ArrayList<Face> almacenCaras) {
+    public ObjectD(ArrayList<Face> almacenCaras,ArrayList<ObjectD> almacenOjectosInferiores) {
         this.centro = new Point(0,0,0);
         this.almacenCaras = almacenCaras;
+        this.almacenOjectosInferiores = almacenOjectosInferiores;
         setupArrayPuntos();
     }
-    public ObjectD(ArrayList<Face> almacenCaras, Point centro) {
+    public ObjectD(ArrayList<Face> almacenCaras,ArrayList<ObjectD> almacenOjectosInferiores, Point centro) {
         this.centro = centro;
         this.almacenCaras = almacenCaras;
+        this.almacenOjectosInferiores = almacenOjectosInferiores;
         setupArrayPuntos();
     }
 
@@ -32,12 +35,15 @@ public class ObjectD {
         ArrayList<Face> devolviendo = new ArrayList<>();
 
         for (int i = 0; i < almacenCaras.size(); i++) {
-            if(devolviendo.size() == 3){
-                break;
-            }
             if (almacenCaras.get(i).getPoints().indexOf(p) != -1) {
                 devolviendo.add(almacenCaras.get(i));
             }
+        }
+        for(ObjectD obj : almacenOjectosInferiores){
+            if(obj.getPuntos().indexOf(p.subtract(obj.centro).divide(obj.vectorEscalado))==-1){
+                continue;
+            }
+            devolviendo.addAll(obj.getTexturas(p.subtract(obj.centro).divide(obj.vectorEscalado)));
         }
         return devolviendo;
     }
@@ -58,8 +64,12 @@ public class ObjectD {
             }
 
         }
-    }
+        for(ObjectD o : almacenOjectosInferiores){
+            almacenPuntos.addAll(o.getPuntos());
+        }
 
+    }
+    //al hacer un cambio en un hijo tengo q reportar los cambios al padre
     public ArrayList<Point> getPuntos() {
         ArrayList<Point> puntos = new ArrayList<>();
         for (Point p : almacenPuntos) {
@@ -69,6 +79,22 @@ public class ObjectD {
         return puntos;
     }
 
+
+    //Manage de objeto
+    public void añadirCara(Face face){
+        almacenCaras.add(face);
+        almacenPuntos.addAll(face.getPoints());
+    }
+    public void añadirObjeto(ObjectD obj){
+        almacenOjectosInferiores.add(obj);
+        almacenPuntos.addAll(obj.getPuntos());
+    }
+    public void quitarCara(){
+
+    }
+    public void quitarObjeto(){
+
+    }
     //transformaciones geometricas
     public void moveTo(double x, double y ,double z){
         centro.x= x;

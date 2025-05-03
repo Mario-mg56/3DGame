@@ -10,5 +10,6 @@ public class Main2 {
     public static void main(String[] args) {
         GameManager gm = GameManager.getInstance();
         gm.play();
+
     }
 }

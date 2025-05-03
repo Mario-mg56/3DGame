@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ObjectD {
-
     //importante usa cordenadas locales
     ObjectD parent;
     ArrayList<Point> almacenPuntos;

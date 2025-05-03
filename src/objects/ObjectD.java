@@ -19,6 +19,7 @@ public class ObjectD {
     ArrayList<ObjectD> children;
     //cambiar por la clase real de las texturas
     //nota de momento se emparejan 1:1 con el almacen de triangulos por lo tanto
+    //tocar escalado funciona mal
     Vector vectorEscalado = new Vector(1,1,1);
     Point centro;
     public ObjectD(ArrayList<Face> almacenCaras,ArrayList<ObjectD> children) {
@@ -43,6 +44,8 @@ public class ObjectD {
             obj.parent = this;
         }
     }
+
+    //esta arreglado pero probablemente de problemas
     public ArrayList<Face> getTexturas(Point p) {
         ArrayList<Face> devolviendo = new ArrayList<>();
 
@@ -52,10 +55,10 @@ public class ObjectD {
             }
         }
         for(ObjectD obj : children){
-            if(obj.getPuntos().indexOf(p.subtract(obj.centro).divide(obj.vectorEscalado))==-1){
+            if(obj.getPuntos().indexOf(p)==-1){
                 continue;
             }
-            devolviendo.addAll(obj.getTexturas(p.subtract(obj.centro).divide(obj.vectorEscalado)));
+            devolviendo.addAll(obj.getTexturas(getUnTransformedPoint(p,obj.vectorEscalado,obj.centro)));
         }
         return devolviendo;
     }
@@ -81,68 +84,124 @@ public class ObjectD {
         }
 
     }
-    //al hacer un cambio en un hijo tengo q reportar los cambios al padre
+
     public ArrayList<Point> getPuntos() {
         ArrayList<Point> puntos = new ArrayList<>();
         for (Point p : almacenPuntos) {
             //aplicar transformaciones
-            puntos.add(p.add(centro).multiply(vectorEscalado));
+            puntos.add(getTransformedPoint(p));
         }
         return puntos;
     }
 
-
-    public void onTransformChange(Point anterior, Point posterior){
-
+    public void removePointFromParents(Point p,ObjectD hijo,Point translate, Vector scale) {
+        if(hijo.parent==null){
+            return;
+        }
+        hijo.parent.almacenPuntos.remove(getUnTransformedPoint(p,scale,translate));
+        removePointFromParents(getUnTransformedPoint(p,scale,translate),hijo.parent,centro,vectorEscalado);
+    }
+    public void addPointToParents(Point p,ObjectD hijo) {
+        if(hijo.parent==null){
+            return;
+        }
+        hijo.parent.almacenPuntos.add(p);
+        addPointToParents(getTransformedPoint(p),hijo.parent);
+    }
+    public void onTransformChange(Point translate, Vector scale){
+        for(Point p : almacenPuntos){
+            removePointFromParents(p,this,translate,scale);
+        }
+        for(Point p : almacenPuntos){
+            addPointToParents(getTransformedPoint(p),this);
+        }
     }
     //Manage de objeto
     public void añadirCara(Face face){
         almacenCaras.add(face);
         almacenPuntos.addAll(face.getPoints());
+        for(Point p : face.getPoints()){
+            addPointToParents(p,this);
+        }
+
     }
     public void añadirObjeto(ObjectD obj){
         children.add(obj);
         almacenPuntos.addAll(obj.getPuntos());
+        for(Point p : obj.getPuntos()){
+            addPointToParents(p,this);
+        }
     }
-    public void quitarCara(){
+    public void quitarCara(Face face){
+        almacenCaras.remove(face);
+        almacenPuntos.removeAll(face.getPoints());
+        for(Point p : face.getPoints()){
+            removePointFromParents(p,this,centro,vectorEscalado);
+        }
 
     }
-    public void quitarObjeto(){
-
+    public void quitarObjeto(ObjectD obj){
+        children.remove(obj);
+        almacenPuntos.removeAll(obj.getPuntos());
+        for(Point p : obj.getPuntos()){
+            removePointFromParents(p,this,centro,vectorEscalado);
+        }
     }
 
+
+
+    public Point getUnTransformedPoint(Point p){
+        return p.subtract(centro).divide(vectorEscalado);
+    }
+    public Point getTransformedPoint(Point p){
+        return p.multiply(vectorEscalado).add(centro);
+    }
+    public Point getUnTransformedPoint(Point p, Vector scale, Point translate){
+        return p.subtract(translate).divide(scale);
+    }
+    public Point getTransformedPoint(Point p, Vector scale, Point translate){
+        return p.multiply(scale).add(translate);
+    }
     //transformaciones geometricas
-    public void moveTo(double x, double y ,double z){
-        centro.x= x;
-        centro.y= y;
-        centro.z= z;
-    }
-    public void move(double x, double y ,double z){
-        centro.x+= x;
-        centro.y+= y;
-        centro.z+= z;
-    }
     public void moveTo(Vector vector){
+        Point tempTrans = centro;
+        Vector tempEscale = vectorEscalado;
         centro.x= vector.x;
         centro.y= vector.y;
         centro.z= vector.z;
+        this.onTransformChange(tempTrans,tempEscale);
     }
     public void move(Vector vector){
+        Point tempTrans = centro;
+        Vector tempEscale = vectorEscalado;
         centro.x+= vector.x;
         centro.y+= vector.y;
         centro.z+= vector.z;
-    }
-    public void scaleTo(float x,float y,float z){
-        vectorEscalado= new Vector(x,y,z);
-    }
-    public void scale(float x,float y,float z){
-        vectorEscalado= vectorEscalado.add(new Vector(x,y,z));
+        this.onTransformChange(tempTrans,tempEscale);
     }
     public void scaleTo(Vector vector){
+        Point tempTrans = centro;
+        Vector tempEscale = vectorEscalado;
         vectorEscalado= vector;
+        this.onTransformChange(tempTrans,tempEscale);
     }
     public void scale(Vector vector){
+        Point tempTrans = centro;
+        Vector tempEscale = vectorEscalado;
         vectorEscalado= vectorEscalado.add(vector);
+        this.onTransformChange(tempTrans,tempEscale);
     }
 
+    public void scaleTo(float x,float y,float z){
+        scaleTo(new Vector(x,y,z));
+    }
+    public void scale(float x,float y,float z){
+        scale(new Vector(x,y,z));
+    }
+    public void moveTo(double x, double y ,double z){
+        moveTo(new Vector(x,y,z));
+    }
+    public void move(double x, double y ,double z){
+        move(new Vector(x,y,z));
+    }
 }

@@ -6,7 +6,7 @@ import java.util.List;
 
 import math.util.*;
 
-public class Matrix {
+public class Matrix implements Operable<Matrix> {
     public double[][] matrix;
 
     public Matrix(double[][] datos){
@@ -31,6 +31,36 @@ public class Matrix {
             }
         }
     }
+    public Matrix add(Matrix matrix){
+        ArrayList<Double> datos = new ArrayList<>();
+        for (int i = 0; i < this.matrix.length; i++) {
+            datos.add(this.toDatos().get(i) + matrix.toDatos().get(i));
+        }
+        return new Matrix(this.matrix.length,this.matrix[0].length,datos);
+    }
+    public Matrix subtract(Matrix matrix){
+        ArrayList<Double> datos = new ArrayList<>();
+        for (int i = 0; i < this.matrix.length; i++) {
+            datos.add(this.toDatos().get(i) - matrix.toDatos().get(i));
+        }
+        return new Matrix(this.matrix.length,this.matrix[0].length,datos);
+    }
+
+    public Matrix divide(Matrix other) {
+        return null;
+    }
+    public void divideS(Matrix other) {
+    }
+    public Matrix multiply(Matrix other) {
+        return null;
+    }
+    public void multiplyS(Matrix other) {
+    }
+    public void addS(Matrix other) {
+    }
+    public void subtractS(Matrix other) {
+    }
+
     public ArrayList<Double> toDatos(){
         ArrayList<Double> datos = new ArrayList<>();
         for (double[] d : matrix) {

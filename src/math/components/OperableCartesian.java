@@ -1,6 +1,6 @@
 package math.components;
 
-public interface OperableCartesian<T extends  OperableCartesian<T>> {
+public interface OperableCartesian<T extends OperableCartesian<T>> {
     T create(double x, double y, double z);
     double getX();
     double getY();

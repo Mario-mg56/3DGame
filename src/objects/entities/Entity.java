@@ -7,7 +7,7 @@ public class Entity {
     public double speedRate;
     public Entity() {
         this.position = new Point(0, 0, 0);
-        this.speedRate = 100.0;
+        this.speedRate = 10.0;
     }
     public Entity(Point position) {
         this.position = position;

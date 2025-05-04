@@ -31,7 +31,7 @@ public class UtilVector {
     public static Vector producto_vectorial(Vector v, Vector u) {
         return new Vector(
                 (v.y * u.z) - (v.z * u.y),
-                -1*((v.x * u.z) - (v.z * u.x)),
+                ((v.x * u.z) - (v.z * u.x))*-1,
                 (v.x * u.y) - (v.y * u.x)
         );
     }

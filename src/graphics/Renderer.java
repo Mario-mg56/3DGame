@@ -47,7 +47,6 @@ public class Renderer {
         for (Point2 p : gm.info2d) {
             Draw.drawPoint(p, Color.BLUE);
         }
-
     }
 
     public void clean() { //Libera los recursos

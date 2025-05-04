@@ -21,7 +21,7 @@ public class InputManager {
 
     private void setUpListeners(){
         long window = GameManager.getInstance().renderer.getWindow();
-        gm.player.movementVector = gm.cam.vector_a_la_camara.normalize().multiply(gm.player.speedRate);
+        gm.player.movementVector = gm.cam.vectorALaCam.normalize().multiply(gm.player.speedRate);
         gm.player.movementVector.y = 0;
         //Listener teclas presionadas
         GLFW.glfwSetKeyCallback(window, (windowHandle, key, scancode, action, mods) -> {
@@ -93,7 +93,7 @@ public class InputManager {
             System.out.print("Me muevo de " + gm.player.position);
             movementVector = new Vector(gm.player.movementVector.x, gm.player.movementVector.y, gm.player.movementVector.z);
             gm.player.position = gm.player.position.add(movementVector);
-            gm.cam.puntoDeLaCamara.add(movementVector);
+            gm.cam.addPosition(movementVector);
             System.out.println(" a " + gm.player.position);
         }
         if(pressingA){
@@ -102,14 +102,14 @@ public class InputManager {
             movementVector = new Vector(gm.player.movementVector.z*-1, gm.player.movementVector.y, gm.player.movementVector.x);
             System.out.println(movementVector);
             gm.player.position = gm.player.position.add(movementVector);
-            gm.cam.puntoDeLaCamara.add(movementVector);
+            gm.cam.addPosition(movementVector);
             System.out.println(" a " + gm.player.position);
         }
         if(pressingS){
             System.out.print("Me muevo de " + gm.player.position);
             movementVector = new Vector(gm.player.movementVector.x, gm.player.movementVector.y, gm.player.movementVector.z);
             gm.player.position = gm.player.position.subtract(movementVector) ;
-            gm.cam.puntoDeLaCamara.subtract(movementVector);
+            gm.cam.substractPosition(movementVector);
             System.out.println(" a " + gm.player.position);
         }
         if(pressingD){
@@ -117,7 +117,7 @@ public class InputManager {
             //Perpendicular derecha del vector
             movementVector = new Vector(gm.player.movementVector.z, gm.player.movementVector.y, gm.player.movementVector.x*-1);
             gm.player.position = gm.player.position.add(movementVector);
-            gm.cam.puntoDeLaCamara.add(movementVector);
+            gm.cam.addPosition(movementVector);
             System.out.println(" a " + gm.player.position);
         }
         if(pressingRC){

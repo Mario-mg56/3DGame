@@ -8,6 +8,7 @@ import objects.Object;
 import objects.entities.*;
 import graphics.*;
 
+import static math.util.UtilVector.createVector;
 import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 
 public class GameManager {
@@ -39,13 +40,14 @@ public class GameManager {
         this.cam = new Cam(400);
         this.renderer = new Renderer(width, height);
         this.inputManager = new InputManager();
-
         setObjs();
         //glfwWindowShouldClose devuelve true si se cierra la ventana
         while (!glfwWindowShouldClose(renderer.getWindow())) { //Game loop
             cam.update();
-            renderer.update();
             inputManager.update();
+            renderer.update();
+            System.out.println("vx = " + createVector(cam.puntoDeLaCamara, cam.pivotX).getMod());
+            System.out.println("vy = " + createVector(cam.puntoDeLaCamara, cam.pivotY).getMod());
         }
         renderer.clean();
     }

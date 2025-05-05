@@ -46,8 +46,9 @@ public class GameManager {
             cam.update();
             inputManager.update();
             renderer.update();
-            System.out.println("vx = " + createVector(cam.puntoDeLaCamara, cam.pivotX).getMod());
-            System.out.println("vy = " + createVector(cam.puntoDeLaCamara, cam.pivotY).getMod());
+//            System.out.println("vx = " + createVector(cam.puntoDeLaCamara, cam.pivotX).getMod());
+//            System.out.println("vy = " + createVector(cam.puntoDeLaCamara, cam.pivotY).getMod());
+            System.out.println(createVector(cam.puntoDeLaCamara, cam.position).getMod());
         }
         renderer.clean();
     }

@@ -8,7 +8,7 @@ import math.util.Utilities;
 
 public class Cam {
     double fov, rotSpeed;
-    public Point puntoDeLaCamara, position;
+    public Point puntoDeLaCamara, position, control;
     GameManager gm;
     public Vector vectorNormal, vectorALaCam, vector_X_local, vector_Y_local;
     private Plane plano_camara;
@@ -20,6 +20,7 @@ public class Cam {
         this.gm = GameManager.getInstance();
         this.position = gm.player.position;
         this.puntoDeLaCamara = new Point(position.x+fov, position.y, position.z);
+        this.control = new Point(position.x, position.y+5, position.z);
         this.vectorALaCam= createVector(puntoDeLaCamara, position);
         setUpAxis();
         actualizar_plano();
@@ -71,6 +72,7 @@ public class Cam {
 
     private void actualizar_plano(){
         this.position = gm.player.position;
+        this.control = new Point(position.x, position.y+5, position.z);
         this.vectorNormal = createVector(puntoDeLaCamara, position);
         this.plano_camara = new Plane(puntoDeLaCamara, vectorNormal);
         this.vectorALaCam = createVector(puntoDeLaCamara, position);
@@ -126,9 +128,6 @@ public class Cam {
         //y el target quiere decir que el objetivo no se encuentra en nuestro campo de visión
         Vector pcam_tg = createVector(target, puntoDeLaCamara);
         if (cam_tg.getMod() < pcam_tg.getMod()) return null;
-
-
-
         return null;
     }
 
@@ -137,16 +136,17 @@ public class Cam {
     }
 
     public void addPosition(Vector vector){
-        puntoDeLaCamara.add(vector);
-        pivotX.add(vector);
-        pivotY.add(vector);
+        this.puntoDeLaCamara.addS(vector);
+        this.pivotX.addS(vector);
+        this.pivotY.addS(vector);
+        this.position = gm.player.position;
+
     }
 
     public void substractPosition(Vector vector){
-        puntoDeLaCamara.subtract(vector);
-        pivotX.subtract(vector);
-        pivotY.subtract(vector);
+        this.puntoDeLaCamara.subtractS(vector);
+        this.pivotX.subtractS(vector);
+        this.pivotY.subtractS(vector);
+        this.position = gm.player.position;
     }
-
-    //falta añadir comentarios de python y funciones
 }
